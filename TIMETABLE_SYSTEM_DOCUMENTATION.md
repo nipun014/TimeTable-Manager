@@ -185,8 +185,108 @@ The system generates:
 
 The system uses CP-SAT (Constraint Programming with SAT solving) which:
 - Finds feasible solutions satisfying ALL hard constraints
+- Minimizes weighted penalty from soft constraint violations
 - Returns INFEASIBLE if no valid timetable exists
-- Can optimize soft objectives (currently set to feasibility-only)
+- Can balance multiple objectives through weighted penalties
+
+## Soft Constraints and Objective Function
+
+The system supports soft constraints that are minimized through a weighted penalty objective:
+
+### 1. Teacher Availability (Soft)
+**Penalty:** Scheduling teachers during periods marked unavailable (availability = 0).
+
+**Weight:** `teacher_unavailable` (default: 10)
+
+**Implementation:** Each assignment to unavailable slot adds penalty.
+
+```json
+"weights": {
+  "teacher_unavailable": 10
+}
+```
+
+### 2. Minimize Teacher Idle Time
+**Penalty:** Transitions between teaching and not teaching within a day (fragmentation).
+
+**Weight:** `teacher_idle_transition` (default: 2)
+
+**Implementation:** Counts state changes per teacher per day to group classes together.
+
+```json
+"weights": {
+  "teacher_idle_transition": 2
+}
+```
+
+### 3. Limit Consecutive Periods for Students
+**Penalty:** Classes scheduled beyond the consecutive period threshold without breaks.
+
+**Weight:** `class_consecutive_overrun` (default: 3)
+
+**Implementation:** Penalizes runs exceeding `max_consecutive_periods` (default: 3).
+
+```json
+"max_consecutive_periods": 3,
+"weights": {
+  "class_consecutive_overrun": 3
+}
+```
+
+### 4. Even Distribution of Subjects Across the Week
+**Penalty:** Scheduling more than 1 period of a subject per day for the same class.
+
+**Weight:** `subject_spread_excess` (default: 2)
+
+**Implementation:** Each excess period beyond 1 per day adds penalty.
+
+```json
+"weights": {
+  "subject_spread_excess": 2
+}
+```
+
+### 5. Avoid Back-to-Back Heavy Subjects
+**Penalty:** Scheduling two heavy subjects consecutively for the same class.
+
+**Weight:** `heavy_back_to_back` (default: 1)
+
+**Implementation:** Subjects marked `is_heavy: true` incur penalty if adjacent.
+
+```json
+"subjects": {
+  "Math": {
+    "is_heavy": true
+  }
+},
+"weights": {
+  "heavy_back_to_back": 1
+}
+```
+
+### 6. Teacher Load Fairness
+**Penalty:** Imbalance between early and late period assignments per teacher.
+
+**Weight:** `teacher_early_late_imbalance` (default: 1)
+
+**Implementation:** Minimizes absolute difference between early and late period counts.
+
+```json
+"early_periods": [0, 1],
+"late_periods": [4, 5],
+"weights": {
+  "teacher_early_late_imbalance": 1
+}
+```
+
+### Objective Function
+
+The solver minimizes:
+```
+Total Penalty = Σ (weight_i × violation_count_i)
+```
+
+All soft constraints are configurable via `sample_data.json`. To disable a soft constraint, set its weight to 0.
 
 ## Troubleshooting Infeasibility
 
@@ -209,12 +309,8 @@ If the solver returns "No solution found" (INFEASIBLE), possible causes:
 Potential improvements to implement:
 - Room capacity enforcement
 - Break/lunch period constraints
-- Preference-based teacher assignments
-- Load balancing optimization
 - Multi-week scheduling
 - Custom natural language rules (via LLM integration)
-- Minimize teacher idle time (soft constraint)
-- Prevent same subject consecutive days for classes
 
 ## Technical Details
 
