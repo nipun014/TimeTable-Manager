@@ -1,59 +1,48 @@
 {
-    "classes": [
-        "ClassA",
-        "ClassB"
-    ],
-    "periods_per_day": 4,
-    "subjects": {
-        "Math": {
-            "hours_per_week": 4
-        },
-        "English": {
-            "hours_per_week": 3
-        },
-        "Physics": {
-            "hours_per_week": 2
-        }
+  "days": 2,
+  "periods_per_day": 4,
+
+  "classes": [
+    "CSE_A",
+    "CSE_B",
+    "ECE_A"
+  ],
+
+  "subjects": {
+    "Math": { "hours_per_week": 4 },
+    "English": { "hours_per_week": 3 },
+    "Physics": { "hours_per_week": 3 },
+    "Programming": { "hours_per_week": 4 }
+  },
+
+  "teachers": {
+    "Tina": {
+      "can_teach": ["Math", "Physics"],
+      "availability": [
+        [1, 1, 1, 0],
+        [1, 1, 0, 0]
+      ]
     },
-    "teachers": {
-        "Tina": {
-            "can_teach": [
-                "Math"
-            ],
-            "availability": [
-                [
-                    1,
-                    1,
-                    1,
-                    1
-                ],
-                [
-                    1,
-                    1,
-                    1,
-                    1
-                ]
-            ]
-        },
-        "Raj": {
-            "can_teach": [
-                "English",
-                "Physics"
-            ],
-            "availability": [
-                [
-                    1,
-                    1,
-                    1,
-                    1
-                ],
-                [
-                    1,
-                    1,
-                    1,
-                    1
-                ]
-            ]
-        }
+    "Raj": {
+      "can_teach": ["English"],
+      "availability": [
+        [1, 1, 1, 1],
+        [1, 0, 1, 0]
+      ]
+    },
+    "Anita": {
+      "can_teach": ["Programming"],
+      "availability": [
+        [1, 1, 0, 0],
+        [1, 1, 1, 1]
+      ]
+    },
+    "Kumar": {
+      "can_teach": ["Math"],
+      "availability": [
+        [0, 1, 1, 1],
+        [1, 1, 1, 0]
+      ]
     }
+  }
 }
