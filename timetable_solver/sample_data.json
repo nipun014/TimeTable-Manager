@@ -1,0 +1,59 @@
+{
+    "classes": [
+        "ClassA",
+        "ClassB"
+    ],
+    "periods_per_day": 4,
+    "subjects": {
+        "Math": {
+            "hours_per_week": 4
+        },
+        "English": {
+            "hours_per_week": 3
+        },
+        "Physics": {
+            "hours_per_week": 2
+        }
+    },
+    "teachers": {
+        "Tina": {
+            "can_teach": [
+                "Math"
+            ],
+            "availability": [
+                [
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                [
+                    1,
+                    1,
+                    1,
+                    1
+                ]
+            ]
+        },
+        "Raj": {
+            "can_teach": [
+                "English",
+                "Physics"
+            ],
+            "availability": [
+                [
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                [
+                    1,
+                    1,
+                    1,
+                    1
+                ]
+            ]
+        }
+    }
+}

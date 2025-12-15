@@ -1,0 +1,1 @@
+# Timetable Solver package init
