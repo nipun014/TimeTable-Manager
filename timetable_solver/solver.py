@@ -12,30 +12,39 @@ import matplotlib.pyplot as plt
 
 
 def _build_table_for_class(c, data, x, solver) -> pd.DataFrame:
-    """Create a DataFrame with Period / Subject / Teacher for a class."""
+    """Create a DataFrame with Day-Period grid for a class."""
+    days = data['days']
     P = data['periods_per_day']
     subjects = data['subjects']
     teachers = data['teachers']
+    rooms = data['rooms']
 
     table_data = []
-    for p in range(P):
-        row = {'Period': f"Period {p+1}"}
-        found = False
-        for s in subjects:
-            for t in teachers:
-                if s in data['teacher_info'][t]['can_teach']:
-                    var = x[c][p][s].get(t)
-                    if var is not None and solver.Value(var) == 1:
-                        row['Subject'] = s
-                        row['Teacher'] = t
-                        found = True
-                        break
-            if found:
-                break
-        if not found:
-            row['Subject'] = 'Free'
-            row['Teacher'] = '-'
-        table_data.append(row)
+    for d in range(days):
+        for p in range(P):
+            row = {'Day': f"Day {d+1}", 'Period': f"P{p+1}"}
+            found = False
+            for s in subjects:
+                for t in teachers:
+                    if s in data['teacher_info'][t]['can_teach']:
+                        if t in x[c][d][p].get(s, {}):
+                            for r in rooms:
+                                var = x[c][d][p][s][t].get(r)
+                                if var is not None and solver.Value(var) == 1:
+                                    row['Subject'] = s
+                                    row['Teacher'] = t
+                                    row['Room'] = r
+                                    found = True
+                                    break
+                        if found:
+                            break
+                if found:
+                    break
+            if not found:
+                row['Subject'] = 'Free'
+                row['Teacher'] = '-'
+                row['Room'] = '-'
+            table_data.append(row)
     return pd.DataFrame(table_data)
 
 
@@ -52,16 +61,17 @@ def pretty_print_solution(data, x, solver):
 
 
 def export_timetable_image(data, x, solver, output_path: str = "timetable.png"):
-    """Render each class timetable as a grid (days x periods) with subject and teacher."""
+    """Render each class timetable as a grid (days x periods) with subject, teacher, and room."""
     classes = data['classes']
     P = data['periods_per_day']
-    days = data.get('days', 5)
+    days = data['days']
     subjects = data['subjects']
     teachers = data['teachers']
+    rooms = data['rooms']
 
     n = len(classes)
     fig_height = max(3 * n, 4)
-    fig, axes = plt.subplots(n, 1, figsize=(12, fig_height))
+    fig, axes = plt.subplots(n, 1, figsize=(14, fig_height))
 
     # Normalize axes to a flat list
     if hasattr(axes, "ravel"):
@@ -72,7 +82,7 @@ def export_timetable_image(data, x, solver, output_path: str = "timetable.png"):
     for ax, c in zip(axes, classes):
         # Build grid: rows = days, cols = periods
         grid_data = []
-        col_headers = [f"Period {p+1}" for p in range(P)]
+        col_headers = [f"P{p+1}" for p in range(P)]
 
         for day in range(days):
             row = []
@@ -81,10 +91,14 @@ def export_timetable_image(data, x, solver, output_path: str = "timetable.png"):
                 for s in subjects:
                     for t in teachers:
                         if s in data['teacher_info'][t]['can_teach']:
-                            var = x[c][p][s].get(t)
-                            if var is not None and solver.Value(var) == 1:
-                                row.append(f"{s}\n({t})")
-                                found = True
+                            if t in x[c][day][p].get(s, {}):
+                                for r in rooms:
+                                    var = x[c][day][p][s][t].get(r)
+                                    if var is not None and solver.Value(var) == 1:
+                                        row.append(f"{s}\n{t}\n{r}")
+                                        found = True
+                                        break
+                            if found:
                                 break
                     if found:
                         break
@@ -123,16 +137,17 @@ def export_timetable_image(data, x, solver, output_path: str = "timetable.png"):
 
 
 def export_teacher_timetables(data, x, solver, output_path: str = "teacher_timetables.png"):
-    """Render separate timetables for each teacher (days x periods with class and subject)."""
+    """Render separate timetables for each teacher (days x periods with class, subject, and room)."""
     classes = data['classes']
     P = data['periods_per_day']
-    days = data.get('days', 5)
+    days = data['days']
     subjects = data['subjects']
     teachers = data['teachers']
+    rooms = data['rooms']
 
     n = len(teachers)
     fig_height = max(3 * n, 4)
-    fig, axes = plt.subplots(n, 1, figsize=(12, fig_height))
+    fig, axes = plt.subplots(n, 1, figsize=(14, fig_height))
 
     # Normalize axes to a flat list
     if hasattr(axes, "ravel"):
@@ -143,7 +158,7 @@ def export_teacher_timetables(data, x, solver, output_path: str = "teacher_timet
     for ax, t in zip(axes, teachers):
         # Build grid: rows = days, cols = periods
         grid_data = []
-        col_headers = [f"Period {p+1}" for p in range(P)]
+        col_headers = [f"P{p+1}" for p in range(P)]
 
         for day in range(days):
             row = []
@@ -152,10 +167,14 @@ def export_teacher_timetables(data, x, solver, output_path: str = "teacher_timet
                 for c in classes:
                     for s in subjects:
                         if s in data['teacher_info'][t]['can_teach']:
-                            var = x[c][p][s].get(t)
-                            if var is not None and solver.Value(var) == 1:
-                                row.append(f"{s}\n({c})")
-                                found = True
+                            if t in x[c][day][p].get(s, {}):
+                                for r in rooms:
+                                    var = x[c][day][p][s][t].get(r)
+                                    if var is not None and solver.Value(var) == 1:
+                                        row.append(f"{s}\n{c}\n{r}")
+                                        found = True
+                                        break
+                            if found:
                                 break
                     if found:
                         break
@@ -198,13 +217,22 @@ if __name__ == '__main__':
     model, x = build_model(data)
 
     solver = cp_model.CpSolver()
-    solver.parameters.max_time_in_seconds = 10
+    solver.parameters.max_time_in_seconds = 30
     solver.parameters.num_search_workers = 8
+    solver.parameters.log_search_progress = True
 
+    print("Solving timetable with constraints...")
+    print(f"Classes: {len(data['classes'])}")
+    print(f"Days: {data['days']}, Periods/day: {data['periods_per_day']}")
+    print(f"Subjects: {len(data['subjects'])}")
+    print(f"Teachers: {len(data['teachers'])}")
+    print(f"Rooms: {len(data['rooms'])}")
+    
     res = solver.Solve(model)
     if res in (cp_model.OPTIMAL, cp_model.FEASIBLE):
+        print(f"\n✓ Solution found! Status: {solver.StatusName(res)}")
         pretty_print_solution(data, x, solver)
         export_timetable_image(data, x, solver)
         export_teacher_timetables(data, x, solver)
     else:
-        print('No solution found')
+        print(f'\n✗ No solution found. Status: {solver.StatusName(res)}')

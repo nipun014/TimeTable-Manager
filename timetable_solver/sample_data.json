@@ -1,48 +1,135 @@
 {
-  "days": 2,
-  "periods_per_day": 4,
+  "days": 5,
+  "periods_per_day": 6,
 
   "classes": [
     "CSE_A",
-    "CSE_B",
-    "ECE_A"
+    "CSE_B"
   ],
 
   "subjects": {
-    "Math": { "hours_per_week": 4 },
-    "English": { "hours_per_week": 3 },
-    "Physics": { "hours_per_week": 3 },
-    "Programming": { "hours_per_week": 4 }
+    "Math": { 
+      "hours_per_week": 3,
+      "requires_special_room": false,
+      "room_type": "standard",
+      "is_double_period": false,
+      "is_indivisible": false
+    },
+    "English": { 
+      "hours_per_week": 3,
+      "requires_special_room": false,
+      "room_type": "standard",
+      "is_double_period": false,
+      "is_indivisible": false
+    },
+    "Physics": { 
+      "hours_per_week": 3,
+      "requires_special_room": false,
+      "room_type": "standard",
+      "is_double_period": false,
+      "is_indivisible": false
+    },
+    "Programming": { 
+      "hours_per_week": 3,
+      "requires_special_room": false,
+      "room_type": "standard",
+      "is_double_period": false,
+      "is_indivisible": false
+    },
+    "DataStructures": { 
+      "hours_per_week": 3,
+      "requires_special_room": false,
+      "room_type": "standard",
+      "is_double_period": false,
+      "is_indivisible": false
+    }
   },
 
   "teachers": {
-    "Tina": {
+    "Dr_Sharma": {
       "can_teach": ["Math", "Physics"],
       "availability": [
-        [1, 1, 1, 0],
-        [1, 1, 0, 0]
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1]
       ]
     },
-    "Raj": {
+    "Prof_Kumar": {
+      "can_teach": ["Math", "DataStructures"],
+      "availability": [
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1]
+      ]
+    },
+    "Ms_Patel": {
       "can_teach": ["English"],
       "availability": [
-        [1, 1, 1, 1],
-        [1, 0, 1, 0]
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1]
       ]
     },
-    "Anita": {
-      "can_teach": ["Programming"],
+    "Mr_Singh": {
+      "can_teach": ["Programming", "DataStructures"],
       "availability": [
-        [1, 1, 0, 0],
-        [1, 1, 1, 1]
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1]
       ]
     },
-    "Kumar": {
-      "can_teach": ["Math"],
+    "Dr_Rao": {
+      "can_teach": ["Physics", "Programming"],
       "availability": [
-        [0, 1, 1, 1],
-        [1, 1, 1, 0]
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1]
       ]
+    }
+  },
+
+  "rooms": {
+    "Room_101": {
+      "type": "standard",
+      "capacity": 40
+    },
+    "Room_102": {
+      "type": "standard",
+      "capacity": 40
+    },
+    "Room_103": {
+      "type": "standard",
+      "capacity": 40
+    },
+    "Room_104": {
+      "type": "standard",
+      "capacity": 40
+    },
+    "Lab_A": {
+      "type": "lab",
+      "capacity": 30
+    },
+    "Lab_B": {
+      "type": "lab",
+      "capacity": 30
+    },
+    "CompLab_1": {
+      "type": "computer",
+      "capacity": 35
+    },
+    "CompLab_2": {
+      "type": "computer",
+      "capacity": 35
     }
   }
 }
