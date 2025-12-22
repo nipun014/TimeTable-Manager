@@ -5,3 +5,5 @@ model using OR-Tools and a small sample dataset. Use it as a starting point for 
 custom constraints, preferences, UI, and data import/export.
 
 See sample_data.json for expected data format.
+
+For a complete architecture walkthrough and extension guide, read ../SYSTEM_OVERVIEW.md.

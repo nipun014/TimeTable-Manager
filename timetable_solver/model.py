@@ -27,6 +27,7 @@ def build_model(data: Dict) -> Tuple[cp_model.CpModel, Dict]:
     teacher_info = data['teacher_info']
     room_info = data['room_info']
     subject_info = data['subject_info']
+    class_subjects = data.get('class_subjects', {})
     raw = data.get('raw', {})
     # Soft constraint configuration (defaults can be overridden in sample_data.json -> weights)
     weights = raw.get('weights', {})
@@ -49,12 +50,14 @@ def build_model(data: Dict) -> Tuple[cp_model.CpModel, Dict]:
     # x[c][d][p][s][t][r] = 1 if class c has subject s with teacher t in room r at day d, period p
     x = {}
     for c in classes:
+        # Get subjects for this specific class
+        class_subject_list = class_subjects.get(c, subjects)
         x[c] = {}
         for d in range(days):
             x[c][d] = {}
             for p in range(P):
                 x[c][d][p] = {}
-                for s in subjects:
+                for s in class_subject_list:  # Only subjects for this class
                     x[c][d][p][s] = {}
                     for t in teachers:
                         # Only if teacher can teach this subject (availability handled as soft)
@@ -74,10 +77,11 @@ def build_model(data: Dict) -> Tuple[cp_model.CpModel, Dict]:
     # (Allow empty slots - classes don't need to fill all periods)
     # ==========================
     for c in classes:
+        class_subject_list = class_subjects.get(c, subjects)
         for d in range(days):
             for p in range(P):
                 slot_vars = []
-                for s in subjects:
+                for s in class_subject_list:
                     for t in teachers:
                         if s in teacher_info[t]['can_teach']:
                             if t in x[c][d][p].get(s, {}):
@@ -141,7 +145,8 @@ def build_model(data: Dict) -> Tuple[cp_model.CpModel, Dict]:
     # Each subject must be scheduled exactly the required number of periods per week
     # ==========================
     for c in classes:
-        for s in subjects:
+        class_subject_list = class_subjects.get(c, subjects)
+        for s in class_subject_list:  # Only subjects assigned to this class
             required_hours = subject_info[s]['hours_per_week']
             subject_vars = []
             for d in range(days):
@@ -155,6 +160,51 @@ def build_model(data: Dict) -> Tuple[cp_model.CpModel, Dict]:
                                         subject_vars.append(var)
             # Exact frequency requirement
             model.Add(sum(subject_vars) == required_hours)
+
+    # ==========================
+    # HARD CONSTRAINT 9: Teacher forbidden slots (availability)
+    # Teacher cannot be scheduled in unavailable slots
+    # ==========================
+    for c in classes:
+        for d in range(days):
+            for p in range(P):
+                for s in subjects:
+                    for t in teachers:
+                        if s in teacher_info[t]['can_teach']:
+                            # Only if teacher is UNAVAILABLE, force variable to 0
+                            if int(teacher_info[t]['availability'][d][p]) == 0:
+                                if t in x[c][d][p].get(s, {}):
+                                    for r in rooms:
+                                        var = x[c][d][p][s][t].get(r)
+                                        if var is not None:
+                                            model.Add(var == 0)  # HARD: forbidden
+
+    # ==========================
+    # HARD CONSTRAINT 10: Global break periods (blocked slots)
+    # No assignments during institution-wide breaks
+    # ==========================
+    breaks = raw.get('institution', {}).get('breaks', [])
+    for break_info in breaks:
+        break_day = break_info.get('day', -1)
+        break_period = break_info.get('period', 0)
+        duration = break_info.get('duration', 1)
+        
+        # Determine which days are affected
+        affected_days = range(days) if break_day == -1 else [break_day]
+        
+        for d in affected_days:
+            for offset in range(duration):
+                p = break_period + offset
+                if p < P:
+                    for c in classes:
+                        for s in subjects:
+                            for t in teachers:
+                                if s in teacher_info[t]['can_teach']:
+                                    if t in x[c][d][p].get(s, {}):
+                                        for r in rooms:
+                                            var = x[c][d][p][s][t].get(r)
+                                            if var is not None:
+                                                model.Add(var == 0)  # HARD: blocked
 
     # ==========================
     # HARD CONSTRAINT 7: Double-period constraint
@@ -240,19 +290,8 @@ def build_model(data: Dict) -> Tuple[cp_model.CpModel, Dict]:
                     model.Add(y == 0)
                 y_class[c][d][p] = y
 
-    # 1) Teacher availability (soft): penalize assignments where availability is 0
-    for c in classes:
-        for d in range(days):
-            for p in range(P):
-                for s in subjects:
-                    for t in teachers:
-                        if s in teacher_info[t]['can_teach'] and t in x[c][d][p].get(s, {}):
-                            unavailable = 1 - int(teacher_info[t]['availability'][d][p])
-                            if unavailable == 1:
-                                for r in rooms:
-                                    var = x[c][d][p][s][t].get(r)
-                                    if var is not None:
-                                        penalties.append(W_TEACHER_UNAVAILABLE * var)
+    # 1) Teacher availability: Now enforced as HARD CONSTRAINT 9 (see above)
+    # (Removed soft penalty to avoid double-counting)
 
     # 2) Minimize teacher idle time: penalize transitions (fragmentation) within a day
     for t in teachers:

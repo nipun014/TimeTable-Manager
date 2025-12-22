@@ -1,15 +1,24 @@
     {
     "days": 5,
-    "periods_per_day": 6,
+    "periods_per_day": 8,
 
     "classes": [
         "CSE_A",
-        "CSE_B"
+        "CSE_B",
+        "ECE_A",
+        "MECH_A"
     ],
 
+    "class_subjects": {
+        "CSE_A": ["Mathematics", "English", "Physics", "PhysicsLab", "Programming", "DataStructures", "Chemistry", "ChemistryLab"],
+        "CSE_B": ["Mathematics", "English", "Physics", "PhysicsLab", "Programming", "DatabaseSystems", "Chemistry"],
+        "ECE_A": ["Mathematics", "English", "Physics", "CircuitAnalysis", "DigitalElectronics", "ElectronicsLab", "Chemistry", "EngineeringDrawing"],
+        "MECH_A": ["Mathematics", "English", "Physics", "EngineeringDrawing", "Thermodynamics", "WorkshopPractice", "Chemistry", "MechanicsOfMaterials"]
+    },
+
     "subjects": {
-        "Math": { 
-        "hours_per_week": 3,
+        "Mathematics": { 
+        "hours_per_week": 6,
         "requires_special_room": false,
         "room_type": "standard",
         "is_double_period": false,
@@ -17,7 +26,7 @@
         "is_heavy": true
         },
         "English": { 
-        "hours_per_week": 3,
+        "hours_per_week": 4,
         "requires_special_room": false,
         "room_type": "standard",
         "is_double_period": false,
@@ -25,14 +34,86 @@
         "is_heavy": false
         },
         "Physics": { 
-        "hours_per_week": 3,
+        "hours_per_week": 5,
         "requires_special_room": false,
         "room_type": "standard",
         "is_double_period": false,
         "is_indivisible": false,
         "is_heavy": true
         },
+        "PhysicsLab": { 
+        "hours_per_week": 3,
+        "requires_special_room": true,
+        "room_type": "lab",
+        "is_double_period": false,
+        "is_indivisible": false,
+        "is_heavy": false
+        },
+        "Chemistry": { 
+        "hours_per_week": 4,
+        "requires_special_room": false,
+        "room_type": "standard",
+        "is_double_period": false,
+        "is_indivisible": false,
+        "is_heavy": true
+        },
+        "ChemistryLab": { 
+        "hours_per_week": 3,
+        "requires_special_room": true,
+        "room_type": "lab",
+        "is_double_period": false,
+        "is_indivisible": false,
+        "is_heavy": false
+        },
         "Programming": { 
+        "hours_per_week": 5,
+        "requires_special_room": true,
+        "room_type": "computer",
+        "is_double_period": false,
+        "is_indivisible": false,
+        "is_heavy": true
+        },
+        "DataStructures": { 
+        "hours_per_week": 5,
+        "requires_special_room": true,
+        "room_type": "computer",
+        "is_double_period": false,
+        "is_indivisible": false,
+        "is_heavy": true
+        },
+        "DatabaseSystems": { 
+        "hours_per_week": 5,
+        "requires_special_room": true,
+        "room_type": "computer",
+        "is_double_period": false,
+        "is_indivisible": false,
+        "is_heavy": true
+        },
+        "CircuitAnalysis": { 
+        "hours_per_week": 4,
+        "requires_special_room": false,
+        "room_type": "standard",
+        "is_double_period": false,
+        "is_indivisible": false,
+        "is_heavy": true
+        },
+        "DigitalElectronics": { 
+        "hours_per_week": 4,
+        "requires_special_room": false,
+        "room_type": "standard",
+        "is_double_period": false,
+        "is_indivisible": false,
+        "is_heavy": true
+        },
+        "ElectronicsLab": { 
+        "hours_per_week": 3,
+        "requires_special_room": true,
+        "room_type": "lab",
+        "is_double_period": false,
+        "is_indivisible": false,
+        "is_heavy": false
+        },
+        "EngineeringDrawing": { 
         "hours_per_week": 3,
         "requires_special_room": false,
         "room_type": "standard",
@@ -40,65 +121,241 @@
         "is_indivisible": false,
         "is_heavy": false
         },
-        "DataStructures": { 
-        "hours_per_week": 3,
+        "Thermodynamics": { 
+        "hours_per_week": 4,
         "requires_special_room": false,
         "room_type": "standard",
         "is_double_period": false,
         "is_indivisible": false,
         "is_heavy": true
+        },
+        "MechanicsOfMaterials": { 
+        "hours_per_week": 4,
+        "requires_special_room": false,
+        "room_type": "standard",
+        "is_double_period": false,
+        "is_indivisible": false,
+        "is_heavy": true
+        },
+        "WorkshopPractice": { 
+        "hours_per_week": 3,
+        "requires_special_room": true,
+        "room_type": "lab",
+        "is_double_period": false,
+        "is_indivisible": false,
+        "is_heavy": false
         }
     },
 
     "teachers": {
         "Dr_Sharma": {
-        "can_teach": ["Math", "Physics"],
+        "can_teach": ["Mathematics", "Physics"],
         "availability": [
-            [1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1]
+            [1, 1, 1, 1, 0, 0, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 0, 0],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1]
         ]
         },
         "Prof_Kumar": {
-        "can_teach": ["Math", "DataStructures"],
+        "can_teach": ["Mathematics", "DataStructures"],
         "availability": [
-            [1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1]
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [0, 0, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 0, 0, 0, 0]
+        ]
+        },
+        "Dr_Reddy": {
+        "can_teach": ["Mathematics", "Physics"],
+        "availability": [
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [0, 0, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1]
         ]
         },
         "Ms_Patel": {
         "can_teach": ["English"],
         "availability": [
-            [1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1]
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1]
+        ]
+        },
+        "Ms_Desai": {
+        "can_teach": ["English"],
+        "availability": [
+            [1, 1, 1, 1, 1, 1, 0, 0],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1]
         ]
         },
         "Mr_Singh": {
-        "can_teach": ["Programming", "DataStructures"],
+        "can_teach": ["Programming", "DataStructures", "DatabaseSystems"],
         "availability": [
-            [1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1]
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 0, 0, 0, 0],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1]
         ]
         },
         "Dr_Rao": {
-        "can_teach": ["Physics", "Programming"],
+        "can_teach": ["Programming", "DataStructures"],
         "availability": [
-            [1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1]
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [0, 0, 0, 0, 1, 1, 1, 1]
+        ]
+        },
+        "Prof_Menon": {
+        "can_teach": ["DatabaseSystems", "Programming"],
+        "availability": [
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1]
+        ]
+        },
+        "Dr_Gupta": {
+        "can_teach": ["Physics", "PhysicsLab"],
+        "availability": [
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 0, 0, 0, 0]
+        ]
+        },
+        "Dr_Verma": {
+        "can_teach": ["Chemistry", "ChemistryLab"],
+        "availability": [
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [0, 0, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1]
+        ]
+        },
+        "Prof_Nair": {
+        "can_teach": ["CircuitAnalysis", "DigitalElectronics", "ElectronicsLab"],
+        "availability": [
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 0, 0]
+        ]
+        },
+        "Dr_Iyer": {
+        "can_teach": ["CircuitAnalysis", "DigitalElectronics"],
+        "availability": [
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 0, 0, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1]
+        ]
+        },
+        "Prof_Joshi": {
+        "can_teach": ["EngineeringDrawing"],
+        "availability": [
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1]
+        ]
+        },
+        "Dr_Mehta": {
+        "can_teach": ["Thermodynamics", "MechanicsOfMaterials"],
+        "availability": [
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 0, 0],
+            [1, 1, 1, 1, 1, 1, 1, 1]
+        ]
+        },
+        "Prof_Pillai": {
+        "can_teach": ["Thermodynamics", "WorkshopPractice"],
+        "availability": [
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [0, 0, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1]
+        ]
+        },
+        "Dr_Srinivasan": {
+        "can_teach": ["Mathematics", "Physics"],
+        "availability": [
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1]
+        ]
+        },
+        "Ms_Kapoor": {
+        "can_teach": ["English"],
+        "availability": [
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1]
+        ]
+        },
+        "Prof_Agarwal": {
+        "can_teach": ["Chemistry", "ChemistryLab"],
+        "availability": [
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1]
+        ]
+        },
+        "Dr_Bhat": {
+        "can_teach": ["Physics", "PhysicsLab"],
+        "availability": [
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1]
+        ]
+        },
+        "Mr_Mishra": {
+        "can_teach": ["Programming", "DatabaseSystems"],
+        "availability": [
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1]
+        ]
+        },
+        "Dr_Krishnan": {
+        "can_teach": ["EngineeringDrawing", "MechanicsOfMaterials"],
+        "availability": [
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1]
         ]
         }
     },
@@ -106,48 +363,80 @@
     "rooms": {
         "Room_101": {
         "type": "standard",
-        "capacity": 40
+        "capacity": 60
         },
         "Room_102": {
         "type": "standard",
-        "capacity": 40
+        "capacity": 60
         },
         "Room_103": {
         "type": "standard",
-        "capacity": 40
+        "capacity": 60
         },
         "Room_104": {
         "type": "standard",
-        "capacity": 40
+        "capacity": 60
         },
-        "Lab_A": {
+        "Room_105": {
+        "type": "standard",
+        "capacity": 60
+        },
+        "Room_106": {
+        "type": "standard",
+        "capacity": 60
+        },
+        "PhysicsLab": {
         "type": "lab",
         "capacity": 30
         },
-        "Lab_B": {
+        "ChemLab": {
         "type": "lab",
         "capacity": 30
+        },
+        "ElectronicsLab": {
+        "type": "lab",
+        "capacity": 30
+        },
+        "Workshop": {
+        "type": "lab",
+        "capacity": 25
         },
         "CompLab_1": {
         "type": "computer",
-        "capacity": 35
+        "capacity": 40
         },
         "CompLab_2": {
         "type": "computer",
-        "capacity": 35
+        "capacity": 40
+        },
+        "CompLab_3": {
+        "type": "computer",
+        "capacity": 40
         }
+    },
+
+    "institution": {
+        "breaks": [
+        ]
+    },
+
+    "solver_config": {
+        "max_time_seconds": 60,
+        "num_workers": 8,
+        "log_progress": true,
+        "random_seed": null
     },
 
     "weights": {
         "teacher_unavailable": 10,
-        "teacher_idle_transition": 2,
-        "class_consecutive_overrun": 3,
-        "subject_spread_excess": 2,
-        "heavy_back_to_back": 1,
-        "teacher_early_late_imbalance": 1
+        "teacher_idle_transition": 3,
+        "class_consecutive_overrun": 4,
+        "subject_spread_excess": 3,
+        "heavy_back_to_back": 2,
+        "teacher_early_late_imbalance": 2
     },
 
-    "max_consecutive_periods": 3,
+    "max_consecutive_periods": 4,
     "early_periods": [0, 1],
-    "late_periods": [4, 5]
+    "late_periods": [6, 7]
     }

@@ -29,6 +29,9 @@ def load_data(path: Path = DATA_FILE) -> Dict:
     
     # subject details with constraint information
     subject_info = data['subjects']
+    
+    # class-specific subject lists
+    class_subjects = data.get('class_subjects', {c: subjects for c in classes})
 
     return {
         'classes': classes,
@@ -40,5 +43,6 @@ def load_data(path: Path = DATA_FILE) -> Dict:
         'teacher_info': teacher_info,
         'room_info': room_info,
         'subject_info': subject_info,
+        'class_subjects': class_subjects,
         'raw': data
     }
