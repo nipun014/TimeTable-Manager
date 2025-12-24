@@ -1,9 +1,3 @@
-"""
-solver.py
-
-Simple entrypoint that loads sample data, builds the model, solves it and prints
-a readable timetable. Extend with logging, time limits and richer search strategies.
-"""
 from ortools.sat.python import cp_model
 from .data_loader import load_data
 from .model import build_model
@@ -14,7 +8,6 @@ import matplotlib.pyplot as plt
 
 
 def _build_table_for_class(c, data, x, solver) -> pd.DataFrame:
-    """Create a DataFrame with Day-Period grid for a class."""
     days = data['days']
     P = data['periods_per_day']
     subjects = data['subjects']
@@ -63,7 +56,6 @@ def pretty_print_solution(data, x, solver):
 
 
 def export_timetable_image(data, x, solver, output_path: str = "timetable.png"):
-    """Render each class timetable as a grid (days x periods) with subject, teacher, and room."""
     classes = data['classes']
     P = data['periods_per_day']
     days = data['days']
@@ -75,14 +67,12 @@ def export_timetable_image(data, x, solver, output_path: str = "timetable.png"):
     fig_height = max(3 * n, 4)
     fig, axes = plt.subplots(n, 1, figsize=(14, fig_height))
 
-    # Normalize axes to a flat list
     if hasattr(axes, "ravel"):
         axes = axes.ravel().tolist()
     elif not isinstance(axes, (list, tuple)):
         axes = [axes]
 
     for ax, c in zip(axes, classes):
-        # Build grid: rows = days, cols = periods
         grid_data = []
         col_headers = [f"P{p+1}" for p in range(P)]
 
@@ -139,7 +129,6 @@ def export_timetable_image(data, x, solver, output_path: str = "timetable.png"):
 
 
 def export_teacher_timetables(data, x, solver, output_path: str = "teacher_timetables.png"):
-    """Render separate timetables for each teacher (days x periods with class, subject, and room)."""
     classes = data['classes']
     P = data['periods_per_day']
     days = data['days']
@@ -215,7 +204,6 @@ def export_teacher_timetables(data, x, solver, output_path: str = "teacher_timet
 
 
 def export_room_timetables(data, x, solver, output_path: str = "room_timetables.png"):
-    """Render separate timetables for each room."""
     classes = data['classes']
     P = data['periods_per_day']
     days = data['days']
@@ -293,26 +281,22 @@ def export_room_timetables(data, x, solver, output_path: str = "room_timetables.
 if __name__ == '__main__':
     data = load_data()
     
-    # ==== PRE-VALIDATION: Check input data before building model ====
     print("="*60)
     print("PRE-SOLVER VALIDATION")
     print("="*60)
     
     pre_validation = pre_validate_input(data)
     
-    # Display informational messages
     if pre_validation.info:
         print("\n[CONFIGURATION SUMMARY]")
         for msg in pre_validation.info:
             print(f"  {msg}")
     
-    # Display warnings
     if pre_validation.warnings:
         print(f"\n[WARNING] {len(pre_validation.warnings)} Warning(s):")
         for msg in pre_validation.warnings:
             print(f"  {msg}")
     
-    # Display errors
     if pre_validation.errors:
         print(f"\n[ERROR] {len(pre_validation.errors)} Critical Error(s) - CANNOT PROCEED:")
         for msg in pre_validation.errors:
@@ -322,7 +306,6 @@ if __name__ == '__main__':
         print("="*60)
         exit(1)
     
-    # If no errors, proceed
     if not pre_validation.warnings:
         print("\n[OK] Pre-validation passed - No issues detected")
     else:
@@ -332,18 +315,15 @@ if __name__ == '__main__':
     print("="*60)
     print()
     
-    # ==== BUILD MODEL AND SOLVE ====
     model, x = build_model(data)
 
     solver = cp_model.CpSolver()
     
-    # Solver configuration with deterministic mode support
     solver_config = data.get('raw', {}).get('solver_config', {})
     solver.parameters.max_time_in_seconds = solver_config.get('max_time_seconds', 60)
     solver.parameters.num_search_workers = solver_config.get('num_workers', 8)
     solver.parameters.log_search_progress = solver_config.get('log_progress', True)
     
-    # Set random seed if specified for reproducibility
     seed = solver_config.get('random_seed')
     if seed is not None:
         solver.parameters.random_seed = int(seed)
@@ -360,7 +340,6 @@ if __name__ == '__main__':
     if res in (cp_model.OPTIMAL, cp_model.FEASIBLE):
         print(f"\n[OK] Solution found! Status: {solver.StatusName(res)}")
         
-        # Validate solution
         validation = validate_timetable(data, x, solver)
         if validation.is_valid:
             print(f"[OK] All constraints satisfied")
@@ -371,7 +350,6 @@ if __name__ == '__main__':
             if len(validation.violations) > 10:
                 print(f"  ... and {len(validation.violations) - 10} more")
         
-        # Show optimization score
         try:
             print(f"📊 Optimization Score (Total Penalty): {solver.ObjectiveValue():.2f}")
         except:

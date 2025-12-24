@@ -1,9 +1,3 @@
-"""
-generator.py
-
-Utility to convert solver output into JSON / CSV / other formats. Minimal example
-returns a dict representation.
-"""
 import json
 from datetime import datetime
 
@@ -30,7 +24,6 @@ def extract_solution(data, x, solver):
 
 
 def export_solution_json(data, x, solver, output_path: str = "solution.json"):
-    """Export complete timetable as structured JSON."""
     classes = data['classes']
     days = data['days']
     P = data['periods_per_day']

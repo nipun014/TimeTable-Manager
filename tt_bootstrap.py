@@ -1,30 +1,3 @@
-"""
-Bootstrap script for the Customizable Timetable Management System (Python + OR-Tools)
-
-Run this file to generate a starter project scaffold called `timetable_solver/` with the
-following files:
-
-- timetable_solver/__init__.py
-- timetable_solver/data_loader.py
-- timetable_solver/constraints.py
-- timetable_solver/model.py
-- timetable_solver/solver.py
-- timetable_solver/generator.py
-- requirements.txt
-- README.md
-- sample_data.json
-
-Usage:
-    python timetable_project_bootstrap.py
-
-After the script runs, install dependencies and run the example solver:
-    pip install -r timetable_solver/requirements.txt
-    python -m timetable_solver.solver
-
-This scaffold contains a *minimal* working CP-SAT model using OR-Tools and small sample data.
-Extend and replace constraints and data with your project's actual requirements.
-"""
-
 from pathlib import Path
 import json
 
@@ -33,8 +6,7 @@ ROOT.mkdir(exist_ok=True)
 
 files = {}
 
-files['__init__.py'] = """# Timetable Solver package init
-"""
+files['__init__.py'] = """"""
 
 files['requirements.txt'] = """ortools>=9.0
 """
@@ -98,22 +70,13 @@ def load_data(path: Path = DATA_FILE) -> Dict:
 '''
 
 files['constraints.py'] = '''"""
-constraints.py
-
-Define hard/soft constraints as functions or classes. For the scaffold we include
-simple constraint checkers that are applied after extraction.
-"""
-
-from typing import Dict
+files['constraints.py'] = '''from typing import Dict
 
 
 class Constraints:
-    """Placeholder constraints container. Extend per project needs."""
-
     def __init__(self, data: Dict):
         self.data = data
 
-    # example: ensure a teacher is qualified for a subject
     def teacher_can_teach(self, teacher: str, subject: str) -> bool:
         return subject in self.data['teacher_info'][teacher]['can_teach']
 
@@ -144,7 +107,6 @@ def build_model(data: Dict) -> Tuple[cp_model.CpModel, Dict]:
     teachers = data['teachers']
     teacher_info = data['teacher_info']
 
-    # Create variables: x[c][p][s][t]
     x = {}
     for c in classes:
         x[c] = {}
@@ -153,7 +115,6 @@ def build_model(data: Dict) -> Tuple[cp_model.CpModel, Dict]:
             for s in subjects:
                 x[c][p][s] = {}
                 for t in teachers:
-                    # only create variable if teacher can teach subject
                     if s in teacher_info[t]['can_teach']:
                         x[c][p][s][t] = model.NewBoolVar(f"x_{c}_{p}_{s}_{t}")
 
@@ -167,10 +128,8 @@ def build_model(data: Dict) -> Tuple[cp_model.CpModel, Dict]:
                         var = x[c][p][s].get(t)
                         if var is not None:
                             vars_at_slot.append(var)
-            # allow possibility of empty slot? For now force exactly one
             model.Add(sum(vars_at_slot) == 1)
 
-    # Constraint: teacher at most one class per period
     for t in teachers:
         for p in range(P):
             teacher_vars = []
@@ -182,8 +141,6 @@ def build_model(data: Dict) -> Tuple[cp_model.CpModel, Dict]:
                             teacher_vars.append(var)
             model.Add(sum(teacher_vars) <= 1)
 
-    # (Optional) Soft objective: balance teacher load (minimize max load)
-    # Compute total assignments per teacher
     total_per_teacher = {}
     max_load = model.NewIntVar(0, P * len(classes), 'max_load')
     for t in teachers:
@@ -197,10 +154,8 @@ def build_model(data: Dict) -> Tuple[cp_model.CpModel, Dict]:
                             tv.append(var)
         if tv:
             total = sum(tv)
-            # CP-SAT requires IntVar for totals if combining with other IntVars
             total_per_teacher[t] = total
             model.Add(total_per_teacher[t] <= max_load)
-    # minimize max load
     model.Minimize(max_load)
 
     return model, x
@@ -254,13 +209,7 @@ if __name__ == '__main__':
         print('No solution found')
 '''
 
-files['generator.py'] = '''"""
-generator.py
-
-Utility to convert solver output into JSON / CSV / other formats. Minimal example
-returns a dict representation.
-"""
-
+files['generator.py'] = '''
 def extract_solution(data, x, solver):
     classes = data['classes']
     P = data['periods_per_day']
@@ -282,7 +231,6 @@ def extract_solution(data, x, solver):
     return out
 '''
 
-# Write files to disk
 for name, content in files.items():
     path = ROOT / name
     with open(path, 'w', encoding='utf-8') as f:
