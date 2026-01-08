@@ -1,14 +1,14 @@
 {
   "metadata": {
-    "timestamp": "2026-01-08T14:27:33.726184",
+    "timestamp": "2026-01-08T22:22:58.093340",
     "status": "feasible",
-    "objective_value": 36.0,
+    "objective_value": 7.0,
     "solver": "Google OR-Tools CP-SAT",
-    "days": 5,
-    "periods_per_day": 6
+    "days": 2,
+    "periods_per_day": 3
   },
   "class_timetables": {
-    "ClassA": [
+    "C1": [
       [
         {
           "day": 1,
@@ -27,217 +27,43 @@
         {
           "day": 1,
           "period": 3,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 1,
-          "period": 4,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 1,
-          "period": 5,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 1,
-          "period": 6,
           "subject": "Math",
-          "teacher": "Teacher1",
-          "room": "Room102"
+          "teacher": "T1",
+          "room": "R101"
         }
       ],
       [
         {
           "day": 2,
           "period": 1,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 2,
-          "period": 2,
-          "subject": "Science",
-          "teacher": "Teacher3",
-          "room": "Room101"
-        },
-        {
-          "day": 2,
-          "period": 3,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 2,
-          "period": 4,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 2,
-          "period": 5,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 2,
-          "period": 6,
           "subject": "Math",
-          "teacher": "Teacher1",
-          "room": "Room102"
-        }
-      ],
-      [
-        {
-          "day": 3,
-          "period": 1,
-          "subject": null,
-          "teacher": null,
-          "room": null
+          "teacher": "T1",
+          "room": "R101"
         },
         {
-          "day": 3,
-          "period": 2,
-          "subject": "Math",
-          "teacher": "Teacher1",
-          "room": "Room102"
-        },
-        {
-          "day": 3,
-          "period": 3,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 3,
-          "period": 4,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 3,
-          "period": 5,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 3,
-          "period": 6,
-          "subject": "English",
-          "teacher": "Teacher2",
-          "room": "Room102"
-        }
-      ],
-      [
-        {
-          "day": 4,
-          "period": 1,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 4,
+          "day": 2,
           "period": 2,
           "subject": null,
           "teacher": null,
           "room": null
         },
         {
-          "day": 4,
+          "day": 2,
           "period": 3,
-          "subject": "English",
-          "teacher": "Teacher2",
-          "room": "Room102"
-        },
-        {
-          "day": 4,
-          "period": 4,
-          "subject": "English",
-          "teacher": "Teacher2",
-          "room": "Room102"
-        },
-        {
-          "day": 4,
-          "period": 5,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 4,
-          "period": 6,
-          "subject": "Science",
-          "teacher": "Teacher3",
-          "room": "Room102"
-        }
-      ],
-      [
-        {
-          "day": 5,
-          "period": 1,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 5,
-          "period": 2,
-          "subject": "Math",
-          "teacher": "Teacher1",
-          "room": "Room102"
-        },
-        {
-          "day": 5,
-          "period": 3,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 5,
-          "period": 4,
-          "subject": "Science",
-          "teacher": "Teacher3",
-          "room": "Room101"
-        },
-        {
-          "day": 5,
-          "period": 5,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 5,
-          "period": 6,
           "subject": null,
           "teacher": null,
           "room": null
         }
       ]
     ],
-    "ClassB": [
+    "C2": [
       [
         {
           "day": 1,
           "period": 1,
-          "subject": null,
-          "teacher": null,
-          "room": null
+          "subject": "Physics",
+          "teacher": "T2",
+          "room": "Lab1"
         },
         {
           "day": 1,
@@ -249,27 +75,6 @@
         {
           "day": 1,
           "period": 3,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 1,
-          "period": 4,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 1,
-          "period": 5,
-          "subject": "Math",
-          "teacher": "Teacher1",
-          "room": "Room102"
-        },
-        {
-          "day": 1,
-          "period": 6,
           "subject": null,
           "teacher": null,
           "room": null
@@ -279,9 +84,9 @@
         {
           "day": 2,
           "period": 1,
-          "subject": "Science",
-          "teacher": "Teacher3",
-          "room": "Room102"
+          "subject": null,
+          "teacher": null,
+          "room": null
         },
         {
           "day": 2,
@@ -293,159 +98,6 @@
         {
           "day": 2,
           "period": 3,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 2,
-          "period": 4,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 2,
-          "period": 5,
-          "subject": "Math",
-          "teacher": "Teacher1",
-          "room": "Room102"
-        },
-        {
-          "day": 2,
-          "period": 6,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        }
-      ],
-      [
-        {
-          "day": 3,
-          "period": 1,
-          "subject": "Math",
-          "teacher": "Teacher1",
-          "room": "Room102"
-        },
-        {
-          "day": 3,
-          "period": 2,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 3,
-          "period": 3,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 3,
-          "period": 4,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 3,
-          "period": 5,
-          "subject": "English",
-          "teacher": "Teacher2",
-          "room": "Room102"
-        },
-        {
-          "day": 3,
-          "period": 6,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        }
-      ],
-      [
-        {
-          "day": 4,
-          "period": 1,
-          "subject": "English",
-          "teacher": "Teacher2",
-          "room": "Room102"
-        },
-        {
-          "day": 4,
-          "period": 2,
-          "subject": "English",
-          "teacher": "Teacher2",
-          "room": "Room102"
-        },
-        {
-          "day": 4,
-          "period": 3,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 4,
-          "period": 4,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 4,
-          "period": 5,
-          "subject": "Science",
-          "teacher": "Teacher3",
-          "room": "Room102"
-        },
-        {
-          "day": 4,
-          "period": 6,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        }
-      ],
-      [
-        {
-          "day": 5,
-          "period": 1,
-          "subject": "Math",
-          "teacher": "Teacher1",
-          "room": "Room102"
-        },
-        {
-          "day": 5,
-          "period": 2,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 5,
-          "period": 3,
-          "subject": "Science",
-          "teacher": "Teacher3",
-          "room": "Room102"
-        },
-        {
-          "day": 5,
-          "period": 4,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 5,
-          "period": 5,
-          "subject": null,
-          "teacher": null,
-          "room": null
-        },
-        {
-          "day": 5,
-          "period": 6,
           "subject": null,
           "teacher": null,
           "room": null
@@ -454,7 +106,7 @@
     ]
   },
   "teacher_timetables": {
-    "Teacher1": [
+    "T1": [
       [
         {
           "day": 1,
@@ -473,39 +125,18 @@
         {
           "day": 1,
           "period": 3,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 1,
-          "period": 4,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 1,
-          "period": 5,
-          "class": "ClassB",
+          "class": "C1",
           "subject": "Math",
-          "room": "Room102"
-        },
-        {
-          "day": 1,
-          "period": 6,
-          "class": "ClassA",
-          "subject": "Math",
-          "room": "Room102"
+          "room": "R101"
         }
       ],
       [
         {
           "day": 2,
           "period": 1,
-          "class": null,
-          "subject": null,
-          "room": null
+          "class": "C1",
+          "subject": "Math",
+          "room": "R101"
         },
         {
           "day": 2,
@@ -517,173 +148,20 @@
         {
           "day": 2,
           "period": 3,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 2,
-          "period": 4,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 2,
-          "period": 5,
-          "class": "ClassB",
-          "subject": "Math",
-          "room": "Room102"
-        },
-        {
-          "day": 2,
-          "period": 6,
-          "class": "ClassA",
-          "subject": "Math",
-          "room": "Room102"
-        }
-      ],
-      [
-        {
-          "day": 3,
-          "period": 1,
-          "class": "ClassB",
-          "subject": "Math",
-          "room": "Room102"
-        },
-        {
-          "day": 3,
-          "period": 2,
-          "class": "ClassA",
-          "subject": "Math",
-          "room": "Room102"
-        },
-        {
-          "day": 3,
-          "period": 3,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 3,
-          "period": 4,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 3,
-          "period": 5,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 3,
-          "period": 6,
-          "class": null,
-          "subject": null,
-          "room": null
-        }
-      ],
-      [
-        {
-          "day": 4,
-          "period": 1,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 4,
-          "period": 2,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 4,
-          "period": 3,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 4,
-          "period": 4,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 4,
-          "period": 5,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 4,
-          "period": 6,
-          "class": null,
-          "subject": null,
-          "room": null
-        }
-      ],
-      [
-        {
-          "day": 5,
-          "period": 1,
-          "class": "ClassB",
-          "subject": "Math",
-          "room": "Room102"
-        },
-        {
-          "day": 5,
-          "period": 2,
-          "class": "ClassA",
-          "subject": "Math",
-          "room": "Room102"
-        },
-        {
-          "day": 5,
-          "period": 3,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 5,
-          "period": 4,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 5,
-          "period": 5,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 5,
-          "period": 6,
           "class": null,
           "subject": null,
           "room": null
         }
       ]
     ],
-    "Teacher2": [
+    "T2": [
       [
         {
           "day": 1,
           "period": 1,
-          "class": null,
-          "subject": null,
-          "room": null
+          "class": "C2",
+          "subject": "Physics",
+          "room": "Lab1"
         },
         {
           "day": 1,
@@ -695,27 +173,6 @@
         {
           "day": 1,
           "period": 3,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 1,
-          "period": 4,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 1,
-          "period": 5,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 1,
-          "period": 6,
           "class": null,
           "subject": null,
           "room": null
@@ -739,381 +196,6 @@
         {
           "day": 2,
           "period": 3,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 2,
-          "period": 4,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 2,
-          "period": 5,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 2,
-          "period": 6,
-          "class": null,
-          "subject": null,
-          "room": null
-        }
-      ],
-      [
-        {
-          "day": 3,
-          "period": 1,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 3,
-          "period": 2,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 3,
-          "period": 3,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 3,
-          "period": 4,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 3,
-          "period": 5,
-          "class": "ClassB",
-          "subject": "English",
-          "room": "Room102"
-        },
-        {
-          "day": 3,
-          "period": 6,
-          "class": "ClassA",
-          "subject": "English",
-          "room": "Room102"
-        }
-      ],
-      [
-        {
-          "day": 4,
-          "period": 1,
-          "class": "ClassB",
-          "subject": "English",
-          "room": "Room102"
-        },
-        {
-          "day": 4,
-          "period": 2,
-          "class": "ClassB",
-          "subject": "English",
-          "room": "Room102"
-        },
-        {
-          "day": 4,
-          "period": 3,
-          "class": "ClassA",
-          "subject": "English",
-          "room": "Room102"
-        },
-        {
-          "day": 4,
-          "period": 4,
-          "class": "ClassA",
-          "subject": "English",
-          "room": "Room102"
-        },
-        {
-          "day": 4,
-          "period": 5,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 4,
-          "period": 6,
-          "class": null,
-          "subject": null,
-          "room": null
-        }
-      ],
-      [
-        {
-          "day": 5,
-          "period": 1,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 5,
-          "period": 2,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 5,
-          "period": 3,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 5,
-          "period": 4,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 5,
-          "period": 5,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 5,
-          "period": 6,
-          "class": null,
-          "subject": null,
-          "room": null
-        }
-      ]
-    ],
-    "Teacher3": [
-      [
-        {
-          "day": 1,
-          "period": 1,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 1,
-          "period": 2,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 1,
-          "period": 3,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 1,
-          "period": 4,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 1,
-          "period": 5,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 1,
-          "period": 6,
-          "class": null,
-          "subject": null,
-          "room": null
-        }
-      ],
-      [
-        {
-          "day": 2,
-          "period": 1,
-          "class": "ClassB",
-          "subject": "Science",
-          "room": "Room102"
-        },
-        {
-          "day": 2,
-          "period": 2,
-          "class": "ClassA",
-          "subject": "Science",
-          "room": "Room101"
-        },
-        {
-          "day": 2,
-          "period": 3,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 2,
-          "period": 4,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 2,
-          "period": 5,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 2,
-          "period": 6,
-          "class": null,
-          "subject": null,
-          "room": null
-        }
-      ],
-      [
-        {
-          "day": 3,
-          "period": 1,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 3,
-          "period": 2,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 3,
-          "period": 3,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 3,
-          "period": 4,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 3,
-          "period": 5,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 3,
-          "period": 6,
-          "class": null,
-          "subject": null,
-          "room": null
-        }
-      ],
-      [
-        {
-          "day": 4,
-          "period": 1,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 4,
-          "period": 2,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 4,
-          "period": 3,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 4,
-          "period": 4,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 4,
-          "period": 5,
-          "class": "ClassB",
-          "subject": "Science",
-          "room": "Room102"
-        },
-        {
-          "day": 4,
-          "period": 6,
-          "class": "ClassA",
-          "subject": "Science",
-          "room": "Room102"
-        }
-      ],
-      [
-        {
-          "day": 5,
-          "period": 1,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 5,
-          "period": 2,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 5,
-          "period": 3,
-          "class": "ClassB",
-          "subject": "Science",
-          "room": "Room102"
-        },
-        {
-          "day": 5,
-          "period": 4,
-          "class": "ClassA",
-          "subject": "Science",
-          "room": "Room101"
-        },
-        {
-          "day": 5,
-          "period": 5,
-          "class": null,
-          "subject": null,
-          "room": null
-        },
-        {
-          "day": 5,
-          "period": 6,
           "class": null,
           "subject": null,
           "room": null
@@ -1122,7 +204,7 @@
     ]
   },
   "room_utilization": {
-    "Room101": [
+    "R101": [
       [
         {
           "day": 1,
@@ -1141,217 +223,43 @@
         {
           "day": 1,
           "period": 3,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 1,
-          "period": 4,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 1,
-          "period": 5,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 1,
-          "period": 6,
-          "class": null,
-          "subject": null,
-          "teacher": null
+          "class": "C1",
+          "subject": "Math",
+          "teacher": "T1"
         }
       ],
       [
         {
           "day": 2,
           "period": 1,
-          "class": null,
-          "subject": null,
-          "teacher": null
+          "class": "C1",
+          "subject": "Math",
+          "teacher": "T1"
         },
         {
           "day": 2,
           "period": 2,
-          "class": "ClassA",
-          "subject": "Science",
-          "teacher": "Teacher3"
-        },
-        {
-          "day": 2,
-          "period": 3,
           "class": null,
           "subject": null,
           "teacher": null
         },
         {
           "day": 2,
-          "period": 4,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 2,
-          "period": 5,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 2,
-          "period": 6,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        }
-      ],
-      [
-        {
-          "day": 3,
-          "period": 1,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 3,
-          "period": 2,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 3,
           "period": 3,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 3,
-          "period": 4,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 3,
-          "period": 5,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 3,
-          "period": 6,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        }
-      ],
-      [
-        {
-          "day": 4,
-          "period": 1,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 4,
-          "period": 2,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 4,
-          "period": 3,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 4,
-          "period": 4,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 4,
-          "period": 5,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 4,
-          "period": 6,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        }
-      ],
-      [
-        {
-          "day": 5,
-          "period": 1,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 5,
-          "period": 2,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 5,
-          "period": 3,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 5,
-          "period": 4,
-          "class": "ClassA",
-          "subject": "Science",
-          "teacher": "Teacher3"
-        },
-        {
-          "day": 5,
-          "period": 5,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 5,
-          "period": 6,
           "class": null,
           "subject": null,
           "teacher": null
         }
       ]
     ],
-    "Room102": [
+    "Lab1": [
       [
         {
           "day": 1,
           "period": 1,
-          "class": null,
-          "subject": null,
-          "teacher": null
+          "class": "C2",
+          "subject": "Physics",
+          "teacher": "T2"
         },
         {
           "day": 1,
@@ -1366,36 +274,15 @@
           "class": null,
           "subject": null,
           "teacher": null
-        },
-        {
-          "day": 1,
-          "period": 4,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 1,
-          "period": 5,
-          "class": "ClassB",
-          "subject": "Math",
-          "teacher": "Teacher1"
-        },
-        {
-          "day": 1,
-          "period": 6,
-          "class": "ClassA",
-          "subject": "Math",
-          "teacher": "Teacher1"
         }
       ],
       [
         {
           "day": 2,
           "period": 1,
-          "class": "ClassB",
-          "subject": "Science",
-          "teacher": "Teacher3"
+          "class": null,
+          "subject": null,
+          "teacher": null
         },
         {
           "day": 2,
@@ -1407,159 +294,6 @@
         {
           "day": 2,
           "period": 3,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 2,
-          "period": 4,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 2,
-          "period": 5,
-          "class": "ClassB",
-          "subject": "Math",
-          "teacher": "Teacher1"
-        },
-        {
-          "day": 2,
-          "period": 6,
-          "class": "ClassA",
-          "subject": "Math",
-          "teacher": "Teacher1"
-        }
-      ],
-      [
-        {
-          "day": 3,
-          "period": 1,
-          "class": "ClassB",
-          "subject": "Math",
-          "teacher": "Teacher1"
-        },
-        {
-          "day": 3,
-          "period": 2,
-          "class": "ClassA",
-          "subject": "Math",
-          "teacher": "Teacher1"
-        },
-        {
-          "day": 3,
-          "period": 3,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 3,
-          "period": 4,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 3,
-          "period": 5,
-          "class": "ClassB",
-          "subject": "English",
-          "teacher": "Teacher2"
-        },
-        {
-          "day": 3,
-          "period": 6,
-          "class": "ClassA",
-          "subject": "English",
-          "teacher": "Teacher2"
-        }
-      ],
-      [
-        {
-          "day": 4,
-          "period": 1,
-          "class": "ClassB",
-          "subject": "English",
-          "teacher": "Teacher2"
-        },
-        {
-          "day": 4,
-          "period": 2,
-          "class": "ClassB",
-          "subject": "English",
-          "teacher": "Teacher2"
-        },
-        {
-          "day": 4,
-          "period": 3,
-          "class": "ClassA",
-          "subject": "English",
-          "teacher": "Teacher2"
-        },
-        {
-          "day": 4,
-          "period": 4,
-          "class": "ClassA",
-          "subject": "English",
-          "teacher": "Teacher2"
-        },
-        {
-          "day": 4,
-          "period": 5,
-          "class": "ClassB",
-          "subject": "Science",
-          "teacher": "Teacher3"
-        },
-        {
-          "day": 4,
-          "period": 6,
-          "class": "ClassA",
-          "subject": "Science",
-          "teacher": "Teacher3"
-        }
-      ],
-      [
-        {
-          "day": 5,
-          "period": 1,
-          "class": "ClassB",
-          "subject": "Math",
-          "teacher": "Teacher1"
-        },
-        {
-          "day": 5,
-          "period": 2,
-          "class": "ClassA",
-          "subject": "Math",
-          "teacher": "Teacher1"
-        },
-        {
-          "day": 5,
-          "period": 3,
-          "class": "ClassB",
-          "subject": "Science",
-          "teacher": "Teacher3"
-        },
-        {
-          "day": 5,
-          "period": 4,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 5,
-          "period": 5,
-          "class": null,
-          "subject": null,
-          "teacher": null
-        },
-        {
-          "day": 5,
-          "period": 6,
           "class": null,
           "subject": null,
           "teacher": null

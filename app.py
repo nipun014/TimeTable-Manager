@@ -2,6 +2,7 @@ import streamlit as st
 import json
 import pandas as pd
 from timetable_solver import model, solver, data_loader
+from timetable_solver.input_parser import parse_text, normalize
 from ortools.sat.python import cp_model
 
 # Helper functions to build DataFrames for teachers and rooms
@@ -56,13 +57,15 @@ def build_room_table(room, data, x, solver):
                 for s in subjects:
                     for t in teachers:
                         if s in data['teacher_info'][t]['can_teach']:
-                            var = x[c][d][p][s][t].get(room)
-                            if var is not None and solver.Value(var) == 1:
-                                row['Class'] = c
-                                row['Subject'] = s
-                                row['Teacher'] = t
-                                found = True
-                                break
+                            # Guard against subjects not present for this class/slot
+                            if t in x[c][d][p].get(s, {}):
+                                var = x[c][d][p][s][t].get(room)
+                                if var is not None and solver.Value(var) == 1:
+                                    row['Class'] = c
+                                    row['Subject'] = s
+                                    row['Teacher'] = t
+                                    found = True
+                                    break
                     if found:
                         break
                 if found:
@@ -78,35 +81,20 @@ st.title("University Timetable Generator")
 
 with st.sidebar:
     st.header("Configuration")
-    uploaded_file = st.file_uploader("Upload JSON config", type="json")
+    uploaded_file = st.file_uploader("Upload config (JSON/YAML/TXT)", type=["json", "yaml", "yml", "txt"])
+    pasted_text = st.text_area("Or paste config (JSON/YAML)")
     max_time = st.number_input("Max Time (seconds)", value=60, min_value=1)
     num_workers = st.number_input("Number of Workers", value=8, min_value=1)
 
 if st.button("Generate Timetable"):
     # Load data
     if uploaded_file is not None:
-        data = json.load(uploaded_file)
-        # Process data similar to data_loader
-        classes = data['classes']
-        days = data.get('days', 5)
-        periods_per_day = data.get('periods_per_day', 6)
-        subjects = list(data['subjects'].keys())
-        teachers = list(data['teachers'].keys())
-        rooms = list(data.get('rooms', {}).keys())
-
-        data = {
-            'classes': classes,
-            'days': days,
-            'periods_per_day': periods_per_day,
-            'subjects': subjects,
-            'teachers': teachers,
-            'rooms': rooms,
-            'teacher_info': data['teachers'],
-            'room_info': data.get('rooms', {}),
-            'subject_info': data['subjects'],
-            'class_subjects': data.get('class_subjects', {c: subjects for c in classes}),
-            'raw': data
-        }
+        text = uploaded_file.read().decode("utf-8")
+        raw = parse_text(text)
+        data = normalize(raw)
+    elif pasted_text.strip():
+        raw = parse_text(pasted_text)
+        data = normalize(raw)
     else:
         data = data_loader.load_data()
 
