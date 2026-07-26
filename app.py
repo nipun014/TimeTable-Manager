@@ -223,7 +223,7 @@ def render_dashboard():
     with mid:
         if st.button("Generate Timetable", type="primary", use_container_width=True):
             st.session_state["generated_result"] = generate_schedule(data)
-            st.success("Timetable generated successfully.")
+            st.rerun()  # recompute metrics (Conflicts) with the fresh result
 
 def render_timetable():
     st.header("Weekly Timetable")

@@ -144,23 +144,39 @@ def build_model(data: Dict) -> Tuple[cp_model.CpModel, Dict]:
                                             if var is not None:
                                                 model.Add(var == 0)
 
+    # Double-period subjects must be scheduled as consecutive same-day pairs taught
+    # by the same teacher in the same room. A block-start var means a 2-period block
+    # begins at p (covers p and p+1); each x equals the sum of blocks covering it, so
+    # occurrences fall into clean non-overlapping pairs (required_hours must be even).
     for c in classes:
-        for s in subjects:
-            if subject_info[s].get('is_double_period', False):
-                for d in range(days):
-                    for p in range(P - 1):
-                        for t in teachers:
-                            if s in teacher_info[t]['can_teach'] and t in x[c][d][p].get(s, {}):
-                                for r in rooms:
-                                    var_p = x[c][d][p][s][t].get(r)
-                                    if var_p is not None:
-                                        var_p1 = None
-                                        if t in x[c][d][p + 1].get(s, {}):
-                                            var_p1 = x[c][d][p + 1][s][t].get(r)
-                                        
-                                        if var_p1 is not None:
-                                            model.AddImplication(var_p, var_p1)
-                                            model.AddImplication(var_p1, var_p)
+        class_subject_list = class_subjects.get(c, subjects)
+        for s in class_subject_list:
+            if not subject_info[s].get('is_double_period', False):
+                continue
+            for d in range(days):
+                block_start = {}  # (p, t, r) -> BoolVar : block covers periods p and p+1
+                for p in range(P - 1):
+                    for t in teachers:
+                        if s not in teacher_info[t]['can_teach']:
+                            continue
+                        if t not in x[c][d][p].get(s, {}) or t not in x[c][d][p + 1].get(s, {}):
+                            continue
+                        for r in rooms:
+                            if x[c][d][p][s][t].get(r) is not None and x[c][d][p + 1][s][t].get(r) is not None:
+                                block_start[(p, t, r)] = model.NewBoolVar(
+                                    f"blk_{c}_d{d}_p{p}_{s}_{t}_{r}")
+                for pp in range(P):
+                    for t in teachers:
+                        if s not in teacher_info[t]['can_teach'] or t not in x[c][d][pp].get(s, {}):
+                            continue
+                        for r in rooms:
+                            var = x[c][d][pp][s][t].get(r)
+                            if var is None:
+                                continue
+                            covering = [b for b in (block_start.get((pp, t, r)),
+                                                    block_start.get((pp - 1, t, r)))
+                                        if b is not None]
+                            model.Add(var == sum(covering) if covering else 0)
 
     penalties: List[cp_model.LinearExpr] = []
 

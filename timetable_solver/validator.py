@@ -139,25 +139,28 @@ def validate_timetable(data: Dict, x, solver) -> ValidationResult:
                                             )
                                             result.is_valid = False
     
+    def _taught(c, d, pp, s, t, r):
+        if 0 <= pp < P and t in x[c][d][pp].get(s, {}):
+            v = x[c][d][pp][s][t].get(r)
+            return v is not None and get_value(v) == 1
+        return False
+
     for c in classes:
         for s in subjects:
             if subject_info[s].get('is_double_period', False):
                 for d in range(days):
-                    for p in range(P - 1):
+                    for p in range(P):
                         for t in teachers:
-                            if s in teacher_info[t]['can_teach']:
-                                if t in x[c][d][p].get(s, {}):
-                                    for r in rooms:
-                                        var_p = x[c][d][p][s][t].get(r)
-                                        if var_p is not None and get_value(var_p) == 1:
-                                            var_p1 = None
-                                            if t in x[c][d][p+1].get(s, {}):
-                                                var_p1 = x[c][d][p+1][s][t].get(r)
-                                            if var_p1 is None or get_value(var_p1) != 1:
-                                                result.violations.append(
-                                                    f"HC7: Double-period {s} for class {c} at Day {d+1} Period {p+1} not continued at Period {p+2} with same teacher/room"
-                                                )
-                                                result.is_valid = False
+                            if s in teacher_info[t]['can_teach'] and t in x[c][d][p].get(s, {}):
+                                for r in rooms:
+                                    var_p = x[c][d][p][s][t].get(r)
+                                    if var_p is not None and get_value(var_p) == 1:
+                                        # valid if paired with the previous OR next period (same t/r)
+                                        if not (_taught(c, d, p - 1, s, t, r) or _taught(c, d, p + 1, s, t, r)):
+                                            result.violations.append(
+                                                f"HC7: Double-period {s} for class {c} at Day {d+1} Period {p+1} is not part of a consecutive pair (same teacher/room)"
+                                            )
+                                            result.is_valid = False
     
     result.hard_count = len([v for v in result.violations if v.startswith('HC')])
     return result
@@ -275,7 +278,13 @@ def pre_validate_input(data: Dict) -> PreValidationResult:
                 f"[ERROR] Subject '{s}' has NO qualified teachers - cannot be scheduled"
             )
             result.is_valid = False
-    
+        if subject_info[s].get('is_double_period', False) and subject_info[s]['hours_per_week'] % 2 != 0:
+            result.errors.append(
+                f"[ERROR] Double-period subject '{s}' has odd hours_per_week "
+                f"({subject_info[s]['hours_per_week']}) - must be even to form pairs"
+            )
+            result.is_valid = False
+
     room_types = {}
     for r in rooms:
         rtype = room_info[r]['type']
@@ -336,6 +345,8 @@ def pre_validate_input(data: Dict) -> PreValidationResult:
         
         max_demand = 0
         for s in teacher_can_teach:
+            if s not in subject_info:  # teacher lists a subject not defined in this dataset
+                continue
             classes_needing_subject = [c for c in classes if s in class_subjects.get(c, subjects)]
             max_demand += len(classes_needing_subject) * subject_info[s]['hours_per_week']
         

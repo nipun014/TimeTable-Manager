@@ -267,9 +267,9 @@ def export_room_timetables(data, x, solver, output_path: str = "room_timetables.
             table[(i, -1)].set_facecolor('#FFE4B5')
             table[(i, -1)].set_text_props(weight='bold')
 
-        room_type = room_info[r]['type']
-        capacity = room_info[r]['capacity']
-        ax.set_title(f"Room: {r} ({room_type}, Cap: {capacity})", 
+        room_type = room_info[r].get('type', 'standard')
+        capacity = room_info[r].get('capacity', '-')
+        ax.set_title(f"Room: {r} ({room_type}, Cap: {capacity})",
                      fontsize=12, fontweight='bold', pad=12)
 
     plt.tight_layout()
