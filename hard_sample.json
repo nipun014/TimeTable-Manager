@@ -1,0 +1,1268 @@
+{
+  "institution": {
+    "name": "Hard Feasible High School",
+    "breaks": []
+  },
+  "days": 5,
+  "periods_per_day": 6,
+  "classes": [
+    "C01",
+    "C02",
+    "C03",
+    "C04",
+    "C05",
+    "C06",
+    "C07",
+    "C08",
+    "C09",
+    "C10",
+    "C11",
+    "C12"
+  ],
+  "subjects": {
+    "Math": {
+      "hours_per_week": 4,
+      "room_type": "standard",
+      "is_heavy": true,
+      "is_double_period": false
+    },
+    "English": {
+      "hours_per_week": 4,
+      "room_type": "standard",
+      "is_heavy": false,
+      "is_double_period": false
+    },
+    "Science": {
+      "hours_per_week": 4,
+      "room_type": "standard",
+      "is_heavy": true,
+      "is_double_period": false
+    },
+    "History": {
+      "hours_per_week": 3,
+      "room_type": "standard",
+      "is_heavy": false,
+      "is_double_period": false
+    },
+    "Geography": {
+      "hours_per_week": 2,
+      "room_type": "standard",
+      "is_heavy": false,
+      "is_double_period": false
+    },
+    "PE": {
+      "hours_per_week": 2,
+      "room_type": "standard",
+      "is_heavy": false,
+      "is_double_period": false
+    },
+    "Computer": {
+      "hours_per_week": 3,
+      "room_type": "computer",
+      "is_heavy": false,
+      "is_double_period": false
+    },
+    "PhysicsLab": {
+      "hours_per_week": 2,
+      "room_type": "lab",
+      "is_heavy": false,
+      "is_double_period": true
+    },
+    "ChemLab": {
+      "hours_per_week": 2,
+      "room_type": "lab",
+      "is_heavy": false,
+      "is_double_period": true
+    }
+  },
+  "teachers": {
+    "T00": {
+      "can_teach": [
+        "Math"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "T01": {
+      "can_teach": [
+        "Math"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          1,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "T02": {
+      "can_teach": [
+        "Math"
+      ],
+      "availability": [
+        [
+          1,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "T03": {
+      "can_teach": [
+        "English"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "T04": {
+      "can_teach": [
+        "English"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          0,
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          0,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "T05": {
+      "can_teach": [
+        "English"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          0,
+          0
+        ]
+      ]
+    },
+    "T06": {
+      "can_teach": [
+        "Science"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "T07": {
+      "can_teach": [
+        "Science"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "T08": {
+      "can_teach": [
+        "Science"
+      ],
+      "availability": [
+        [
+          0,
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          0,
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          0,
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          0,
+          0,
+          1,
+          1
+        ]
+      ]
+    },
+    "T09": {
+      "can_teach": [
+        "History"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "T10": {
+      "can_teach": [
+        "History"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          0,
+          1,
+          1,
+          0
+        ]
+      ]
+    },
+    "T11": {
+      "can_teach": [
+        "Geography"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "T12": {
+      "can_teach": [
+        "Geography"
+      ],
+      "availability": [
+        [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          0,
+          1
+        ]
+      ]
+    },
+    "T13": {
+      "can_teach": [
+        "PE"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          1,
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          0,
+          1,
+          1
+        ]
+      ]
+    },
+    "T14": {
+      "can_teach": [
+        "PE"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "T15": {
+      "can_teach": [
+        "Computer"
+      ],
+      "availability": [
+        [
+          0,
+          1,
+          0,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          0,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "T16": {
+      "can_teach": [
+        "Computer"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          0,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ]
+      ]
+    },
+    "T17": {
+      "can_teach": [
+        "PhysicsLab"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "T18": {
+      "can_teach": [
+        "PhysicsLab"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "T19": {
+      "can_teach": [
+        "ChemLab"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          0,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          0,
+          1,
+          0,
+          1
+        ]
+      ]
+    },
+    "T20": {
+      "can_teach": [
+        "ChemLab"
+      ],
+      "availability": [
+        [
+          1,
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          1,
+          0,
+          1,
+          1,
+          1
+        ]
+      ]
+    }
+  },
+  "rooms": {
+    "STD00": {
+      "type": "standard"
+    },
+    "STD01": {
+      "type": "standard"
+    },
+    "STD02": {
+      "type": "standard"
+    },
+    "STD03": {
+      "type": "standard"
+    },
+    "STD04": {
+      "type": "standard"
+    },
+    "STD05": {
+      "type": "standard"
+    },
+    "STD06": {
+      "type": "standard"
+    },
+    "STD07": {
+      "type": "standard"
+    },
+    "STD08": {
+      "type": "standard"
+    },
+    "STD09": {
+      "type": "standard"
+    },
+    "LAB00": {
+      "type": "lab"
+    },
+    "LAB01": {
+      "type": "lab"
+    },
+    "CMP00": {
+      "type": "computer"
+    },
+    "CMP01": {
+      "type": "computer"
+    }
+  },
+  "class_subjects": {
+    "C01": [
+      "Math",
+      "English",
+      "Science",
+      "History",
+      "Geography",
+      "PE",
+      "Computer",
+      "PhysicsLab",
+      "ChemLab"
+    ],
+    "C02": [
+      "Math",
+      "English",
+      "Science",
+      "History",
+      "Geography",
+      "PE",
+      "Computer",
+      "PhysicsLab",
+      "ChemLab"
+    ],
+    "C03": [
+      "Math",
+      "English",
+      "Science",
+      "History",
+      "Geography",
+      "PE",
+      "Computer",
+      "PhysicsLab",
+      "ChemLab"
+    ],
+    "C04": [
+      "Math",
+      "English",
+      "Science",
+      "History",
+      "Geography",
+      "PE",
+      "Computer",
+      "PhysicsLab",
+      "ChemLab"
+    ],
+    "C05": [
+      "Math",
+      "English",
+      "Science",
+      "History",
+      "Geography",
+      "PE",
+      "Computer",
+      "PhysicsLab",
+      "ChemLab"
+    ],
+    "C06": [
+      "Math",
+      "English",
+      "Science",
+      "History",
+      "Geography",
+      "PE",
+      "Computer",
+      "PhysicsLab",
+      "ChemLab"
+    ],
+    "C07": [
+      "Math",
+      "English",
+      "Science",
+      "History",
+      "Geography",
+      "PE",
+      "Computer",
+      "PhysicsLab",
+      "ChemLab"
+    ],
+    "C08": [
+      "Math",
+      "English",
+      "Science",
+      "History",
+      "Geography",
+      "PE",
+      "Computer",
+      "PhysicsLab",
+      "ChemLab"
+    ],
+    "C09": [
+      "Math",
+      "English",
+      "Science",
+      "History",
+      "Geography",
+      "PE",
+      "Computer",
+      "PhysicsLab",
+      "ChemLab"
+    ],
+    "C10": [
+      "Math",
+      "English",
+      "Science",
+      "History",
+      "Geography",
+      "PE",
+      "Computer",
+      "PhysicsLab",
+      "ChemLab"
+    ],
+    "C11": [
+      "Math",
+      "English",
+      "Science",
+      "History",
+      "Geography",
+      "PE",
+      "Computer",
+      "PhysicsLab",
+      "ChemLab"
+    ],
+    "C12": [
+      "Math",
+      "English",
+      "Science",
+      "History",
+      "Geography",
+      "PE",
+      "Computer",
+      "PhysicsLab",
+      "ChemLab"
+    ]
+  },
+  "weights": {
+    "teacher_unavailable": 10,
+    "teacher_idle_transition": 2,
+    "class_consecutive_overrun": 3,
+    "subject_spread_excess": 2,
+    "heavy_back_to_back": 1,
+    "teacher_early_late_imbalance": 1
+  },
+  "max_consecutive_periods": 3,
+  "early_periods": [
+    0,
+    1
+  ],
+  "late_periods": [
+    4,
+    5
+  ],
+  "solver_config": {
+    "max_time_seconds": 150,
+    "num_workers": 8,
+    "log_progress": true,
+    "random_seed": 42
+  }
+}

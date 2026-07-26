@@ -19,6 +19,25 @@ Outputs:
 - `room_timetables.png`: per-room timetables
 - `solution.json`: structured JSON export with utilization stats
 
+### Choosing a dataset
+
+The solver loads `timetable_solver/sample_data.json` by default. Point it at any
+other dataset with the `DATA_FILE` environment variable (resolved relative to the
+`timetable_solver/` directory):
+
+```powershell
+$env:DATA_FILE = "../hard_sample.json"; python -m timetable_solver.solver
+```
+
+Ready-to-run **feasible** examples live in the repo root:
+- `hard_sample.json` — 12 classes, tight rooms/teachers, double-period labs (stress test)
+- `competitive_example.json` — 9 balanced classes
+- `simple_sample.json` — small starter
+
+> Note: the bundled `sample_data.json` is intentionally over-subscribed (weekly
+> hours exceed available slots) and is **rejected by pre-validation** — use it to
+> see the validator catch an infeasible configuration, not as a runnable solve.
+
 ## Repository Layout
 
 - `timetable_solver/`
@@ -27,11 +46,10 @@ Outputs:
   - `solver.py`: Entrypoint—loads data, validates input, solves, prints, and renders timetables
   - `validator.py`: Pre-solver input validation and post-solver constraint verification
   - `generator.py`: JSON export utilities for solution data
-  - `constraints.py`: Placeholder for custom constraint helpers (post-solve or auxiliary)
   - `requirements.txt`: Python dependencies
   - `sample_data.json`: Minimal dataset schema and example values
 - `SYSTEM_OVERVIEW.md`: This document
-- Other markdown files: supplementary notes and references
+- `hard_sample.json`, `competitive_example.json`, `simple_sample.json`: ready-to-run example datasets (see below)
 
 ## Data Model (sample_data.json)
 
@@ -85,7 +103,7 @@ Solver: OR-Tools CP-SAT (constraint programming with integer/Boolean variables).
 4. **Room type compatibility**: Enforced at variable creation (only compatible `(s,r)` pairs exist)
 5. **Fixed horizon**: Only variables within `days × periods` exist by construction
 6. **Subject frequency**: For each `(c,s)`, exactly `hours_per_week` occurrences across all days/periods/teachers/rooms
-7. **Double-period**: If `s.is_double_period` and scheduled at `(d,p)` with `(t,r)`, must also be scheduled at `(d,p+1)` with the same `(t,r)`
+7. **Double-period**: If `s.is_double_period`, its occurrences are scheduled as consecutive same-day pairs — a block starts at `(d,p)` covering `(d,p)` and `(d,p+1)` with the same `(t,r)`. Occurrences fall into non-overlapping pairs, so `hours_per_week` must be even (pre-validation rejects odd values).
 8. **Teacher availability (hard)**: For each `(t,d,p)` where `availability[d][p] == 0`, enforce `x[...][t][...] == 0`
 9. **Blocked periods**: Global break slots (e.g., lunch) prevent all scheduling at those `(d,p)` slots
 10. **Teacher qualifications**: Enforced at variable creation (only `(s,t)` pairs where `s in can_teach` exist)

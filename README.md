@@ -21,7 +21,27 @@ pip install -r timetable_solver/requirements.txt
 python -m timetable_solver.solver
 ```
 
-If you are using the included bootstrap environment, activate that environment instead of creating a new one.
+By default the solver loads `timetable_solver/sample_data.json` (an intentionally
+over-subscribed dataset that pre-validation rejects). To solve a feasible example,
+set `DATA_FILE`:
+
+```powershell
+$env:DATA_FILE = "../hard_sample.json"; python -m timetable_solver.solver
+```
+
+Ready-to-run feasible datasets in the repo root: `hard_sample.json` (12-class stress
+test with double-period labs), `competitive_example.json`, `simple_sample.json`.
+
+## Streamlit App
+
+`app.py` is a lightweight web UI (upload a JSON dataset, generate a schedule with a
+greedy scheduler, browse per-class timetables, export CSV/Excel):
+
+```powershell
+streamlit run app.py
+```
+
+It is independent of the CP-SAT engine above and uses the same JSON dataset format.
 
 ## What You Get
 
