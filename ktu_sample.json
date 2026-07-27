@@ -1,0 +1,1411 @@
+{
+  "institution": {
+    "name": "APJ Abdul Kalam Technological University - Model Engineering College",
+    "scheme": "KTU 2019",
+    "breaks": [
+      {
+        "day": -1,
+        "period": 4,
+        "duration": 1,
+        "name": "Lunch"
+      }
+    ]
+  },
+  "days": 5,
+  "periods_per_day": 7,
+  "classes": [
+    "S3-CSE-A",
+    "S3-CSE-B",
+    "S3-ECE-A",
+    "S5-CSE-A",
+    "S5-CSE-B",
+    "S5-ECE-A"
+  ],
+  "class_subjects": {
+    "S3-CSE-A": [
+      "MAT203",
+      "CST201",
+      "CST203",
+      "CST205",
+      "HUT200",
+      "CSL201",
+      "CSL203"
+    ],
+    "S3-CSE-B": [
+      "MAT203",
+      "CST201",
+      "CST203",
+      "CST205",
+      "HUT200",
+      "CSL201",
+      "CSL203"
+    ],
+    "S3-ECE-A": [
+      "MAT201",
+      "ECT201",
+      "ECT203",
+      "ECT205",
+      "HUT200",
+      "ECL201",
+      "ECL203"
+    ],
+    "S5-CSE-A": [
+      "CST301",
+      "CST303",
+      "CST305",
+      "CST307",
+      "MCN301",
+      "CSL331",
+      "CSL333"
+    ],
+    "S5-CSE-B": [
+      "CST301",
+      "CST303",
+      "CST305",
+      "CST307",
+      "MCN301",
+      "CSL331",
+      "CSL333"
+    ],
+    "S5-ECE-A": [
+      "ECT301",
+      "ECT303",
+      "ECT305",
+      "ECT307",
+      "MCN301",
+      "ECL331",
+      "ECL333"
+    ]
+  },
+  "subjects": {
+    "MAT203": {
+      "name": "Discrete Mathematical Structures",
+      "hours_per_week": 4,
+      "room_type": "standard",
+      "block_size": 1,
+      "is_heavy": true
+    },
+    "CST201": {
+      "name": "Data Structures",
+      "hours_per_week": 4,
+      "room_type": "standard",
+      "block_size": 1,
+      "is_heavy": true
+    },
+    "CST203": {
+      "name": "Logic System Design",
+      "hours_per_week": 3,
+      "room_type": "standard",
+      "block_size": 1,
+      "is_heavy": false
+    },
+    "CST205": {
+      "name": "Object Oriented Programming (Java)",
+      "hours_per_week": 3,
+      "room_type": "standard",
+      "block_size": 1,
+      "is_heavy": false
+    },
+    "HUT200": {
+      "name": "Professional Ethics",
+      "hours_per_week": 3,
+      "room_type": "standard",
+      "block_size": 1,
+      "is_heavy": false
+    },
+    "CSL201": {
+      "name": "Data Structures Lab",
+      "hours_per_week": 3,
+      "room_type": "computer_lab",
+      "block_size": 3,
+      "is_heavy": false
+    },
+    "CSL203": {
+      "name": "Object Oriented Programming Lab",
+      "hours_per_week": 3,
+      "room_type": "computer_lab",
+      "block_size": 3,
+      "is_heavy": false
+    },
+    "MAT201": {
+      "name": "Partial Differential Equations",
+      "hours_per_week": 4,
+      "room_type": "standard",
+      "block_size": 1,
+      "is_heavy": true
+    },
+    "ECT201": {
+      "name": "Solid State Devices",
+      "hours_per_week": 4,
+      "room_type": "standard",
+      "block_size": 1,
+      "is_heavy": true
+    },
+    "ECT203": {
+      "name": "Logic Circuit Design",
+      "hours_per_week": 3,
+      "room_type": "standard",
+      "block_size": 1,
+      "is_heavy": false
+    },
+    "ECT205": {
+      "name": "Network Theory",
+      "hours_per_week": 3,
+      "room_type": "standard",
+      "block_size": 1,
+      "is_heavy": false
+    },
+    "ECL201": {
+      "name": "Analog Circuits Lab",
+      "hours_per_week": 3,
+      "room_type": "electronics_lab",
+      "block_size": 3,
+      "is_heavy": false
+    },
+    "ECL203": {
+      "name": "Logic Circuits Lab",
+      "hours_per_week": 3,
+      "room_type": "electronics_lab",
+      "block_size": 3,
+      "is_heavy": false
+    },
+    "CST301": {
+      "name": "Formal Languages and Automata Theory",
+      "hours_per_week": 4,
+      "room_type": "standard",
+      "block_size": 1,
+      "is_heavy": true
+    },
+    "CST303": {
+      "name": "Computer Networks",
+      "hours_per_week": 4,
+      "room_type": "standard",
+      "block_size": 1,
+      "is_heavy": true
+    },
+    "CST305": {
+      "name": "System Software",
+      "hours_per_week": 3,
+      "room_type": "standard",
+      "block_size": 1,
+      "is_heavy": false
+    },
+    "CST307": {
+      "name": "Microprocessors and Microcontrollers",
+      "hours_per_week": 3,
+      "room_type": "standard",
+      "block_size": 1,
+      "is_heavy": false
+    },
+    "MCN301": {
+      "name": "Disaster Management",
+      "hours_per_week": 3,
+      "room_type": "standard",
+      "block_size": 1,
+      "is_heavy": false
+    },
+    "CSL331": {
+      "name": "System Software and Microprocessors Lab",
+      "hours_per_week": 3,
+      "room_type": "computer_lab",
+      "block_size": 3,
+      "is_heavy": false
+    },
+    "CSL333": {
+      "name": "Database Management Systems Lab",
+      "hours_per_week": 3,
+      "room_type": "computer_lab",
+      "block_size": 3,
+      "is_heavy": false
+    },
+    "ECT301": {
+      "name": "Linear Integrated Circuits",
+      "hours_per_week": 4,
+      "room_type": "standard",
+      "block_size": 1,
+      "is_heavy": true
+    },
+    "ECT303": {
+      "name": "Digital Signal Processing",
+      "hours_per_week": 4,
+      "room_type": "standard",
+      "block_size": 1,
+      "is_heavy": true
+    },
+    "ECT305": {
+      "name": "Analog and Digital Communication",
+      "hours_per_week": 3,
+      "room_type": "standard",
+      "block_size": 1,
+      "is_heavy": false
+    },
+    "ECT307": {
+      "name": "Control Systems",
+      "hours_per_week": 3,
+      "room_type": "standard",
+      "block_size": 1,
+      "is_heavy": false
+    },
+    "ECL331": {
+      "name": "Communication Lab",
+      "hours_per_week": 3,
+      "room_type": "electronics_lab",
+      "block_size": 3,
+      "is_heavy": false
+    },
+    "ECL333": {
+      "name": "Digital Signal Processing Lab",
+      "hours_per_week": 3,
+      "room_type": "electronics_lab",
+      "block_size": 3,
+      "is_heavy": false
+    }
+  },
+  "teachers": {
+    "MAT01": {
+      "name": "Dr. Anitha R",
+      "department": "Mathematics",
+      "can_teach": [
+        "MAT203",
+        "MAT201"
+      ],
+      "availability": [
+        [
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "MAT02": {
+      "name": "Prof. Suresh K",
+      "department": "Mathematics",
+      "can_teach": [
+        "MAT203"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "CSE01": {
+      "name": "Dr. Reshma P",
+      "department": "CSE",
+      "can_teach": [
+        "CST201",
+        "CSL201"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "CSE02": {
+      "name": "Prof. Vinod M",
+      "department": "CSE",
+      "can_teach": [
+        "CST201",
+        "CST203"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "CSE03": {
+      "name": "Dr. Lekha S",
+      "department": "CSE",
+      "can_teach": [
+        "CST205",
+        "CSL203"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "CSE04": {
+      "name": "Prof. Arun T",
+      "department": "CSE",
+      "can_teach": [
+        "CST203",
+        "CST205",
+        "CSL203"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "CSE05": {
+      "name": "Dr. Priya N",
+      "department": "CSE",
+      "can_teach": [
+        "CST301",
+        "CST305",
+        "CSL331"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "CSE06": {
+      "name": "Prof. Manoj V",
+      "department": "CSE",
+      "can_teach": [
+        "CST303",
+        "CSL333"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "CSE07": {
+      "name": "Dr. Sneha J",
+      "department": "CSE",
+      "can_teach": [
+        "CST301",
+        "CST303"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "CSE08": {
+      "name": "Prof. Rajesh B",
+      "department": "CSE",
+      "can_teach": [
+        "CST305",
+        "CST307",
+        "CSL331"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "CSE09": {
+      "name": "Dr. Divya K",
+      "department": "CSE",
+      "can_teach": [
+        "CST307",
+        "CSL333",
+        "CSL201"
+      ],
+      "availability": [
+        [
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "ECE01": {
+      "name": "Dr. Haritha M",
+      "department": "ECE",
+      "can_teach": [
+        "ECT201",
+        "ECT203",
+        "ECL203"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "ECE02": {
+      "name": "Prof. Nikhil S",
+      "department": "ECE",
+      "can_teach": [
+        "ECT205",
+        "ECL201"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "ECE03": {
+      "name": "Dr. Sandhya P",
+      "department": "ECE",
+      "can_teach": [
+        "ECT301",
+        "ECT305",
+        "ECL331"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "ECE04": {
+      "name": "Prof. Gokul R",
+      "department": "ECE",
+      "can_teach": [
+        "ECT303",
+        "ECT307",
+        "ECL333"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "ECE05": {
+      "name": "Dr. Meera A",
+      "department": "ECE",
+      "can_teach": [
+        "ECT203",
+        "ECT305",
+        "ECL201",
+        "ECL203"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "HUM01": {
+      "name": "Prof. Jayasree V",
+      "department": "Humanities",
+      "can_teach": [
+        "HUT200",
+        "MCN301"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "HUM02": {
+      "name": "Dr. Thomas P",
+      "department": "Humanities",
+      "can_teach": [
+        "HUT200",
+        "MCN301"
+      ],
+      "availability": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    }
+  },
+  "rooms": {
+    "CR301": {
+      "type": "standard",
+      "capacity": 60
+    },
+    "CR302": {
+      "type": "standard",
+      "capacity": 60
+    },
+    "CR303": {
+      "type": "standard",
+      "capacity": 60
+    },
+    "CR304": {
+      "type": "standard",
+      "capacity": 60
+    },
+    "CR305": {
+      "type": "standard",
+      "capacity": 60
+    },
+    "CCL1": {
+      "type": "computer_lab",
+      "capacity": 30
+    },
+    "CCL2": {
+      "type": "computer_lab",
+      "capacity": 30
+    },
+    "ECL1": {
+      "type": "electronics_lab",
+      "capacity": 30
+    }
+  },
+  "max_consecutive_periods": 3,
+  "early_periods": [
+    0,
+    1
+  ],
+  "late_periods": [
+    6,
+    7
+  ],
+  "weights": {
+    "teacher_unavailable": 10,
+    "teacher_idle_transition": 3,
+    "class_consecutive_overrun": 4,
+    "subject_spread_excess": 3,
+    "heavy_back_to_back": 2,
+    "teacher_early_late_imbalance": 1
+  },
+  "solver_config": {
+    "max_time_seconds": 120,
+    "num_workers": 8,
+    "log_progress": false,
+    "random_seed": 42
+  }
+}

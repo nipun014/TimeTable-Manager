@@ -12,7 +12,10 @@ DATA_FILE = Path(__file__).parent / os.getenv('DATA_FILE', 'sample_data.json')
 
 def load_data(path: Path = DATA_FILE) -> Dict:
     with open(path, 'r') as f:
-        data = json.load(f)
+        return prepare_data(json.load(f))
+
+
+def prepare_data(data: Dict) -> Dict:
     classes = data['classes']
     days = data.get('days', 5)
     periods_per_day = data.get('periods_per_day', 6)

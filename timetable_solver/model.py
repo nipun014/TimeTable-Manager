@@ -2,6 +2,16 @@ from ortools.sat.python import cp_model
 from typing import Dict, Tuple, List
 
 
+def block_size(subject: Dict) -> int:
+    """Consecutive periods a subject must occupy. KTU labs are 3; theory is 1.
+
+    `is_double_period` is the legacy spelling of block_size=2 and still works.
+    """
+    if 'block_size' in subject:
+        return int(subject['block_size'])
+    return 2 if subject.get('is_double_period', False) else 1
+
+
 def build_model(data: Dict) -> Tuple[cp_model.CpModel, Dict]:
     model = cp_model.CpModel()
 
@@ -144,25 +154,27 @@ def build_model(data: Dict) -> Tuple[cp_model.CpModel, Dict]:
                                             if var is not None:
                                                 model.Add(var == 0)
 
-    # Double-period subjects must be scheduled as consecutive same-day pairs taught
-    # by the same teacher in the same room. A block-start var means a 2-period block
-    # begins at p (covers p and p+1); each x equals the sum of blocks covering it, so
-    # occurrences fall into clean non-overlapping pairs (required_hours must be even).
+    # Block subjects (KTU labs) occupy N consecutive same-day periods with the same
+    # teacher and room. A block-start var means a block begins at p and covers
+    # p..p+N-1; each x equals the sum of blocks covering it, so occurrences fall into
+    # clean non-overlapping blocks (required_hours must be a multiple of N).
+    # block_size generalizes the old is_double_period flag, which was fixed at 2.
     for c in classes:
         class_subject_list = class_subjects.get(c, subjects)
         for s in class_subject_list:
-            if not subject_info[s].get('is_double_period', False):
+            block = block_size(subject_info[s])
+            if block < 2:
                 continue
             for d in range(days):
-                block_start = {}  # (p, t, r) -> BoolVar : block covers periods p and p+1
-                for p in range(P - 1):
+                block_start = {}  # (p, t, r) -> BoolVar : block covers p .. p+block-1
+                for p in range(P - block + 1):
                     for t in teachers:
                         if s not in teacher_info[t]['can_teach']:
                             continue
-                        if t not in x[c][d][p].get(s, {}) or t not in x[c][d][p + 1].get(s, {}):
+                        if any(t not in x[c][d][p + k].get(s, {}) for k in range(block)):
                             continue
                         for r in rooms:
-                            if x[c][d][p][s][t].get(r) is not None and x[c][d][p + 1][s][t].get(r) is not None:
+                            if all(x[c][d][p + k][s][t].get(r) is not None for k in range(block)):
                                 block_start[(p, t, r)] = model.NewBoolVar(
                                     f"blk_{c}_d{d}_p{p}_{s}_{t}_{r}")
                 for pp in range(P):
@@ -173,9 +185,10 @@ def build_model(data: Dict) -> Tuple[cp_model.CpModel, Dict]:
                             var = x[c][d][pp][s][t].get(r)
                             if var is None:
                                 continue
-                            covering = [b for b in (block_start.get((pp, t, r)),
-                                                    block_start.get((pp - 1, t, r)))
-                                        if b is not None]
+                            covering = [
+                                b for b in (block_start.get((pp - k, t, r)) for k in range(block))
+                                if b is not None
+                            ]
                             model.Add(var == sum(covering) if covering else 0)
 
     penalties: List[cp_model.LinearExpr] = []

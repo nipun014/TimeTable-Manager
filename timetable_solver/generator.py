@@ -31,6 +31,14 @@ def extract_solution(data, x, solver):
 def export_solution_json(data, x, solver, output_path: str = None):
     if output_path is None:
         output_path = os.getenv('SOLUTION_JSON', 'solution.json')
+    solution = build_solution(data, x, solver)
+    with open(output_path, 'w') as f:
+        json.dump(solution, f, indent=2)
+    print(f"Saved solution to {output_path}")
+    return solution
+
+
+def build_solution(data, x, solver) -> dict:
     classes = data['classes']
     days = data['days']
     P = data['periods_per_day']
@@ -154,8 +162,4 @@ def export_solution_json(data, x, solver, output_path: str = None):
             utilization.append(day_usage)
         solution["room_utilization"][r] = utilization
 
-    with open(output_path, 'w') as f:
-        json.dump(solution, f, indent=2)
-    
-    print(f"Saved solution to {output_path}")
     return solution

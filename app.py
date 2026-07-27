@@ -1,350 +1,231 @@
+import html
 import io
 import json
-from collections import defaultdict
-from datetime import datetime
+from pathlib import Path
 
 import pandas as pd
 import streamlit as st
 
-# =========================================================
-# Page config (MUST be first Streamlit call)
-# =========================================================
-st.set_page_config(page_title="Timetable Manager", layout="wide")
+from core import grid, solve, stat, to_dataframe
 
-# =========================================================
-# Global CSS (dark admin theme)
-# =========================================================
+st.set_page_config(page_title="EduSchedule", page_icon="🗓️", layout="wide")
+
+ROOT = Path(__file__).parent
+SAMPLES = {
+    "Simple (2 classes)": ROOT / "simple_sample.json",
+    "KTU S3+S5 (hard, 3-period labs)": ROOT / "ktu_sample.json",
+    "Department (20 classes)": ROOT / "timetable_solver" / "sample_data.json",
+    "Hard (12 classes, tight)": ROOT / "hard_sample.json",
+    "Competitive (9 classes)": ROOT / "competitive_example.json",
+}
+WEIGHT_LABELS = {
+    "teacher_unavailable": "Respect teacher availability",
+    "teacher_idle_transition": "Avoid teacher gaps",
+    "class_consecutive_overrun": "Limit consecutive periods",
+    "subject_spread_excess": "Spread subjects across week",
+    "heavy_back_to_back": "Avoid heavy back-to-back",
+    "teacher_early_late_imbalance": "Balance early/late slots",
+}
+
+# NOTE: keep this at column 0 — markdown turns 4-space-indented lines into a
+# code block, which prints the stylesheet on the page instead of applying it.
 st.markdown(
     """
-    <style>
-    .stApp {
-        background-color: #191919;
-        color: #e5e7eb;
-    }
-
-    section[data-testid="stSidebar"] {
-        background-color: #0A1222;
-        border-right: 1px solid #334155;
-    }
-
-    header[data-testid="stHeader"] {
-        background-color: #191919;
-        border-bottom: 1px solid #334155;
-    }
-
-    .stButton > button,
-    .stDownloadButton > button {
-        background-color: #0e43ad;
-        color: #ffffff;
-        border: 1px solid #334155;
-        box-shadow: none;
-    }
-
-    [data-baseweb="input"] > div,
-    [data-baseweb="select"] > div {
-        background-color: #0f172a;
-        border: 1px solid #334155;
-        color: #e5e7eb;
-    }
-
-    [data-testid="stDataFrame"],
-    [data-testid="stMetric"] {
-        background-color: #0f172a;
-        border: 1px solid #334155;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
+<style>
+.block-container {padding-top: 2.5rem; max-width: 1400px;}
+h1, h2, h3 {letter-spacing: -0.02em;}
+.hero {padding: 1rem 0 0.5rem;}
+.hero h1 {font-size: 2.6rem; margin: 0;}
+.hero p {color: #98a2b8; font-size: 1.05rem; margin: .4rem 0 0;}
+.stats {display: flex; gap: .75rem; flex-wrap: wrap; margin: .5rem 0 1.25rem;}
+.stat {flex: 1 1 120px; background: #171a23; border: 1px solid #262b38; border-radius: 12px; padding: .85rem 1rem;}
+.stat .v {font-size: 1.6rem; font-weight: 650; line-height: 1.1;}
+.stat .k {color: #98a2b8; font-size: .75rem; text-transform: uppercase; letter-spacing: .06em; margin-top: .2rem;}
+.stat.ok .v {color: #4ade80;}
+.stat.warn .v {color: #fbbf24;}
+.stat.bad .v {color: #f87171;}
+.tt {width: 100%; border-collapse: separate; border-spacing: 4px; table-layout: fixed;}
+.tt th {color: #98a2b8; font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; padding: .3rem;}
+.tt th.day {text-align: right; width: 48px; padding-right: .6rem;}
+.tt td {padding: 0;}
+.cell {border-radius: 10px; padding: .5rem .6rem; min-height: 62px;}
+.cell b {display: block; font-size: .85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+.cell span {font-size: .72rem; color: #8b94a8;}
+.cell.free {background: #12141b; border: 1px dashed #262b38;}
+.cell.free b {color: #4b5266; font-weight: 400;}
+</style>
+""",
+    unsafe_allow_html=True,
 )
 
-# =========================================================
-# JSON parsing / validation
-# =========================================================
-def parse_uploaded_json(uploaded_file) -> dict | None:
-    if not uploaded_file:
-        return None
-    try:
-        data = json.load(uploaded_file)
-    except Exception as ex:
-        st.error(f"Could not parse JSON: {ex}")
-        return None
 
-    required = [
-        "days",
-        "periods_per_day",
-        "classes",
-        "subjects",
-        "teachers",
-        "class_subjects",
-    ]
-    missing = [k for k in required if k not in data]
-    if missing:
-        st.error(f"Invalid JSON: missing keys -> {', '.join(missing)}")
-        return None
-
-    return data
-
-
-def get_day_labels(days_count: int) -> list[str]:
-    base = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-    return base[:days_count] if days_count <= len(base) else [f"Day {i+1}" for i in range(days_count)]
-
-
-def get_period_labels(periods_per_day: int) -> list[str]:
-    return [f"Period {i+1}" for i in range(periods_per_day)]
-
-# =========================================================
-# Timetable generator (greedy)
-# =========================================================
-def generate_schedule(data: dict) -> dict:
-    classes = data["classes"]
-    subjects = data["subjects"]
-    teachers = data["teachers"]
-    class_subjects = data["class_subjects"]
-    rooms = data.get("rooms", {})
-
-    days = int(data["days"])
-    periods = int(data["periods_per_day"])
-
-    teachers_by_subject = defaultdict(list)
-    for tid, tinfo in teachers.items():
-        for s in tinfo.get("can_teach", []):
-            teachers_by_subject[s].append(tid)
-
-    rooms_by_type = defaultdict(list)
-    for rid, rinfo in rooms.items():
-        rooms_by_type[rinfo.get("type", "standard")].append(rid)
-
-    remaining = {
-        cls: {
-            sub: int(subjects.get(sub, {}).get("hours_per_week", 0))
-            for sub in class_subjects.get(cls, [])
-        }
-        for cls in classes
-    }
-
-    teacher_busy = defaultdict(set)
-    room_busy = defaultdict(set)
-
-    schedule = {cls: {} for cls in classes}
-    conflicts = 0
-
-    for d in range(days):
-        for p in range(periods):
-            for cls in classes:
-                candidates = [s for s, hrs in remaining[cls].items() if hrs > 0]
-
-                if not candidates:
-                    schedule[cls][(d, p)] = {
-                        "subject": "Free",
-                        "teacher": "-",
-                        "room": "-",
-                        "conflict": False,
-                    }
-                    continue
-
-                candidates.sort(key=lambda s: remaining[cls][s], reverse=True)
-                assigned = False
-
-                for sub in candidates:
-                    for tid in teachers_by_subject.get(sub, []):
-                        availability = teachers[tid].get("availability", [])
-                        if (
-                            d < len(availability)
-                            and p < len(availability[d])
-                            and availability[d][p] == 1
-                            and tid not in teacher_busy[(d, p)]
-                        ):
-                            schedule[cls][(d, p)] = {
-                                "subject": sub,
-                                "teacher": tid,
-                                "room": "-",
-                                "conflict": False,
-                            }
-                            remaining[cls][sub] -= 1
-                            teacher_busy[(d, p)].add(tid)
-                            assigned = True
-                            break
-                    if assigned:
-                        break
-
-                if not assigned:
-                    schedule[cls][(d, p)] = {
-                        "subject": "Unassigned",
-                        "teacher": "N/A",
-                        "room": "N/A",
-                        "conflict": True,
-                    }
-                    conflicts += 1
-
-    return {"schedule": schedule, "conflicts": conflicts, "days": days, "periods": periods}
-
-# =========================================================
-# Sidebar
-# =========================================================
-st.sidebar.title("EduSchedule")
-page = st.sidebar.radio("Go to", ["Dashboard", "Timetable", "Constraints", "Export"])
-
-st.sidebar.subheader("EduSchedule Input")
-uploaded_json = st.sidebar.file_uploader("Upload timetable JSON", type=["json"])
-parsed = parse_uploaded_json(uploaded_json)
-if parsed:
-    st.session_state["input_data"] = parsed
-
-data = st.session_state.get("input_data")
-
-# =========================================================
-# Pages
-# =========================================================
-def render_dashboard():
-    has_data = data is not None
-    st.title("EduSchedule")
-    st.caption("Smart Academic Timetable Management System")
-
-    total_teachers = len(data.get("teachers", {})) if has_data else 0
-    total_classes = len(data.get("classes", [])) if has_data else 0
-    total_constraints = len(data.get("weights", {})) + 3 if has_data else 0
-
-    generated = st.session_state.get("generated_result")
-    conflicts = generated.get("conflicts", 0) if generated else 0
-
-    c1, c2, c3, c4 = st.columns(4, gap="small")
-    c1.metric("Total Teachers", total_teachers)
-    c2.metric("Total Classes", total_classes)
-    c3.metric("Total Constraints", total_constraints)
-    c4.metric("Conflicts", conflicts)
-
-    if not has_data:
-        st.warning("Please upload your JSON file from the sidebar.")
-        st.info("Dashboard metrics and timetable generation will be enabled after upload.")
+def view(title: str, tables: dict, key_a: str, key_b: str):
+    if not tables:
+        st.info(f"No {title.lower()} data in this dataset.")
         return
+    pick = st.selectbox(title, list(tables), key=f"pick_{title}")
+    st.markdown(grid(tables[pick], key_a, key_b), unsafe_allow_html=True)
 
-    _, mid, _ = st.columns([1, 1.2, 1])
-    with mid:
-        if st.button("Generate Timetable", type="primary", use_container_width=True):
-            st.session_state["generated_result"] = generate_schedule(data)
-            st.rerun()  # recompute metrics (Conflicts) with the fresh result
 
-def render_timetable():
-    st.header("Weekly Timetable")
+# ---------------------------------------------------------------- sidebar
+with st.sidebar:
+    st.markdown("### 🗓️ EduSchedule")
+    st.caption("CP-SAT timetable generator")
 
-    gen = st.session_state.get("generated_result")
-    if not gen:
-        st.info("Generate a timetable from the Dashboard first.")
-        return
+    uploaded = st.file_uploader("Upload timetable JSON", type=["json"])
+    if uploaded:
+        try:
+            st.session_state.data = json.load(uploaded)
+            st.session_state.source = uploaded.name
+        except json.JSONDecodeError as ex:
+            st.error(f"Not valid JSON: {ex}")
 
-    classes = data.get("classes", [])
-    cls = st.selectbox("Select Class", classes)
-    day_labels = get_day_labels(gen["days"])
-    period_labels = get_period_labels(gen["periods"])
+    sample = st.selectbox("…or load a sample", ["—"] + list(SAMPLES))
+    if sample != "—" and st.button("Load sample", width='stretch'):
+        st.session_state.data = json.loads(SAMPLES[sample].read_text())
+        st.session_state.source = sample
 
-    df = pd.DataFrame("", index=period_labels, columns=day_labels)
-    for d in range(gen["days"]):
-        for p in range(gen["periods"]):
-            item = gen["schedule"][cls][(d, p)]
-            df.iloc[p, d] = f'{item["subject"]}\n{item["teacher"]}'
+    st.divider()
+    time_limit = st.slider("Solver time limit (s)", 5, 180, 60, step=5)
+    seed = st.number_input("Random seed", value=42, step=1)
 
-    st.dataframe(df, use_container_width=True, height=500)
+data = st.session_state.get("data")
 
-def render_constraints():
-    st.header("Constraints")
+# ---------------------------------------------------------------- landing
+if not data:
+    st.markdown(
+        '<div class="hero"><h1>Build a conflict-free timetable</h1>'
+        "<p>Upload your institution's JSON or load a sample to get started. "
+        "Constraints are solved with Google OR-Tools CP-SAT.</p></div>",
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        "**What the JSON needs**\n\n"
+        "- `classes`, `days`, `periods_per_day`\n"
+        "- `subjects` — hours per week, room type, whether it's a heavy subject\n"
+        "- `teachers` — what each can teach, plus their availability grid\n"
+        "- `rooms` — type and capacity\n"
+        "- `class_subjects` — which subjects each class takes\n"
+    )
+    with st.expander("Peek at a sample file"):
+        st.json(json.loads(SAMPLES["Simple (2 classes)"].read_text()), expanded=False)
+    st.stop()
 
-    if not data:
-        st.warning("Upload JSON first.")
-        return
+# ---------------------------------------------------------------- setup
+st.markdown(
+    f'<div class="hero"><h1>{html.escape(str(data.get("institution", "EduSchedule")))}</h1>'
+    f'<p>{html.escape(str(st.session_state.get("source", "uploaded file")))}</p></div>',
+    unsafe_allow_html=True,
+)
+st.markdown(
+    '<div class="stats">'
+    + stat(len(data.get("classes", [])), "Classes")
+    + stat(len(data.get("teachers", {})), "Teachers")
+    + stat(len(data.get("subjects", {})), "Subjects")
+    + stat(len(data.get("rooms", {})), "Rooms")
+    + stat(f'{data.get("days", 0)}×{data.get("periods_per_day", 0)}', "Slots / week")
+    + "</div>",
+    unsafe_allow_html=True,
+)
 
-    st.caption("Adjust soft preferences for experimentation (prototype mode).")
+with st.expander("⚙️ Constraints — tune how the solver trades off soft rules"):
+    st.caption("Higher weight = the solver tries harder not to break that rule.")
+    weights = dict(data.get("weights", {}))
+    cols = st.columns(2)
+    for i, (key, label) in enumerate(WEIGHT_LABELS.items()):
+        weights[key] = cols[i % 2].slider(label, 0, 20, int(weights.get(key, 1)), key=f"w_{key}")
+    data["weights"] = weights
+    data["max_consecutive_periods"] = st.slider(
+        "Max consecutive periods of one subject",
+        1, 8, int(data.get("max_consecutive_periods", 3)),
+    )
 
-    weights = data.get("weights", {})
-    edited = {}
+raw_json = json.dumps(data, sort_keys=True)
+if st.button("⚡ Generate timetable", type="primary", width='stretch'):
+    with st.spinner(f"Solving — up to {time_limit}s…"):
+        st.session_state.result = solve(raw_json, time_limit, int(seed))
+    st.session_state.result_for = raw_json
 
-    with st.container(border=True):
-        st.subheader("Soft Weights")
-        if not weights:
-            st.info("No weight settings found in uploaded JSON.")
-        for key, value in weights.items():
-            edited[key] = st.slider(key, 0, 20, int(value))
+result = st.session_state.get("result")
+if not result:
+    st.stop()
 
-    with st.container(border=True):
-        st.subheader("Basic Limits")
-        max_consecutive = st.number_input(
-            "max_consecutive_periods",
-            min_value=1,
-            max_value=10,
-            value=int(data.get("max_consecutive_periods", 4)),
+if st.session_state.get("result_for") != raw_json:
+    st.warning("Inputs changed since this run — generate again to refresh.")
+
+# ---------------------------------------------------------------- results
+for msg in result.get("warnings", []):
+    st.warning(msg)
+
+if "solution" not in result:
+    if result["status"] == "UNKNOWN":
+        st.error("Ran out of time before finding a valid timetable.")
+        st.info(
+            "The problem isn't proven impossible — the solver just needs longer. "
+            "Raise the time limit in the sidebar, try a different seed, or relax constraints."
         )
+    else:
+        st.error(f"No timetable found — solver status: {result['status']}")
+    for msg in result.get("errors", []):
+        st.markdown(f"- {msg}")
+    st.stop()
 
-    _, mid, _ = st.columns([1, 1.2, 1])
-    with mid:
-        if st.button("Save Constraints", type="primary", use_container_width=True):
-            st.session_state["saved_constraints"] = {
-                "weights": edited,
-                "max_consecutive_periods": max_consecutive,
-            }
-            st.success("Constraints saved (mock).")
+solution = result["solution"]
+violations = result["violations"]
+free = sum(
+    1
+    for table in solution["class_timetables"].values()
+    for day in table
+    for slot in day
+    if not slot["subject"]
+)
 
-def render_export():
-    st.header("Export")
-    gen = st.session_state.get("generated_result")
-    if not gen:
-        st.info("Generate timetable first.")
-        return
+st.markdown(
+    '<div class="stats">'
+    + stat(result["status"].title(), "Status", "ok")
+    + stat(len(violations), "Violations", "ok" if not violations else "bad")
+    + stat(int(result["objective"]), "Penalty score", "warn" if result["objective"] else "ok")
+    + stat(free, "Free slots")
+    + stat(f'{result["runtime"]:.1f}s', "Solve time")
+    + "</div>",
+    unsafe_allow_html=True,
+)
 
-    rows = []
-    for cls, slots in gen["schedule"].items():
-        for (d, p), item in slots.items():
-            rows.append({
-                "Class": cls,
-                "Day": get_day_labels(gen["days"])[d],
-                "Period": get_period_labels(gen["periods"])[p],
-                "Subject": item["subject"],
-                "Teacher": item["teacher"],
-            })
+if violations:
+    with st.expander(f"❌ {len(violations)} constraint violations", expanded=True):
+        for v in violations[:25]:
+            st.markdown(f"- {v}")
+        if len(violations) > 25:
+            st.caption(f"…and {len(violations) - 25} more")
 
-    df = pd.DataFrame(rows)
-    st.dataframe(df.head(20), use_container_width=True)
+tab_class, tab_teacher, tab_room, tab_export = st.tabs(
+    ["Classes", "Teachers", "Rooms", "Export"]
+)
+with tab_class:
+    view("Class", solution["class_timetables"], "subject", "teacher,room")
+with tab_teacher:
+    view("Teacher", solution["teacher_timetables"], "subject", "class,room")
+with tab_room:
+    view("Room", solution["room_utilization"], "subject", "class,teacher")
 
-    csv_bytes = df.to_csv(index=False).encode("utf-8")
+with tab_export:
+    df = to_dataframe(solution)
+    st.dataframe(df, width='stretch', height=360, hide_index=True)
 
-    excel_bytes = None
-    try:
-        buffer = io.BytesIO()
-        with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
-            df.to_excel(writer, index=False, sheet_name="Timetable")
-        buffer.seek(0)
-        excel_bytes = buffer.read()
-    except Exception:
-        excel_bytes = None
-
-    c1, c2 = st.columns(2, gap="small")
-    with c1:
-        st.download_button(
-            "Download CSV",
-            data=csv_bytes,
-            file_name="timetable.csv",
-            mime="text/csv",
-            use_container_width=True,
-        )
-    with c2:
-        if excel_bytes is not None:
-            st.download_button(
-                "Download Excel",
-                data=excel_bytes,
-                file_name="timetable.xlsx",
-                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                use_container_width=True,
-            )
-        else:
-            st.warning("Excel export unavailable. Install openpyxl.")
-
-# =========================================================
-# Routing
-# =========================================================
-if page == "Dashboard":
-    render_dashboard()
-elif page == "Timetable":
-    render_timetable()
-elif page == "Constraints":
-    render_constraints()
-else:
-    render_export()
+    c1, c2, c3 = st.columns(3)
+    c1.download_button(
+        "⬇ CSV", df.to_csv(index=False).encode(), "timetable.csv", "text/csv",
+        width='stretch',
+    )
+    c2.download_button(
+        "⬇ JSON", json.dumps(solution, indent=2).encode(), "solution.json",
+        "application/json", width='stretch',
+    )
+    buffer = io.BytesIO()
+    with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
+        df.to_excel(writer, index=False, sheet_name="Timetable")
+    c3.download_button(
+        "⬇ Excel", buffer.getvalue(), "timetable.xlsx",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        width='stretch',
+    )

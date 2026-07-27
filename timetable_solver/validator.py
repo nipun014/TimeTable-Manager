@@ -1,5 +1,7 @@
 from typing import Dict, List
 
+from .model import block_size
+
 
 class ValidationResult:
     def __init__(self):
@@ -145,22 +147,36 @@ def validate_timetable(data: Dict, x, solver) -> ValidationResult:
             return v is not None and get_value(v) == 1
         return False
 
+    # HC7: block subjects (KTU labs) must sit in runs of exactly block_size periods
+    # with the same teacher and room. Checking run length catches a 2- or 4-period
+    # run where 3 was required, which a "has a neighbour" check would wave through.
     for c in classes:
         for s in subjects:
-            if subject_info[s].get('is_double_period', False):
-                for d in range(days):
-                    for p in range(P):
-                        for t in teachers:
-                            if s in teacher_info[t]['can_teach'] and t in x[c][d][p].get(s, {}):
-                                for r in rooms:
-                                    var_p = x[c][d][p][s][t].get(r)
-                                    if var_p is not None and get_value(var_p) == 1:
-                                        # valid if paired with the previous OR next period (same t/r)
-                                        if not (_taught(c, d, p - 1, s, t, r) or _taught(c, d, p + 1, s, t, r)):
-                                            result.violations.append(
-                                                f"HC7: Double-period {s} for class {c} at Day {d+1} Period {p+1} is not part of a consecutive pair (same teacher/room)"
-                                            )
-                                            result.is_valid = False
+            block = block_size(subject_info[s])
+            if block < 2:
+                continue
+            for d in range(days):
+                for t in teachers:
+                    if s not in teacher_info[t]['can_teach']:
+                        continue
+                    for r in rooms:
+                        p = 0
+                        while p < P:
+                            if not _taught(c, d, p, s, t, r):
+                                p += 1
+                                continue
+                            run = 0
+                            while _taught(c, d, p + run, s, t, r):
+                                run += 1
+                            # a multiple, not exactly block: two back-to-back sessions of
+                            # the same lab are legal and read as one long run here
+                            if run % block != 0:
+                                result.violations.append(
+                                    f"HC7: {s} for class {c} on Day {d+1} runs {run} consecutive "
+                                    f"period(s) from P{p+1} (needs a multiple of {block}, same teacher/room)"
+                                )
+                                result.is_valid = False
+                            p += run
     
     result.hard_count = len([v for v in result.violations if v.startswith('HC')])
     return result
