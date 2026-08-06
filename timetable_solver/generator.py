@@ -1,41 +1,4 @@
-import json
 from datetime import datetime
-import os
-from dotenv import load_dotenv
-
-# Load environment variables
-load_dotenv()
-
-
-def extract_solution(data, x, solver):
-    classes = data['classes']
-    P = data['periods_per_day']
-    subjects = data['subjects']
-    teachers = data['teachers']
-
-    out = {c: [] for c in classes}
-    for c in classes:
-        for p in range(P):
-            entry = {'period': p+1, 'subject': None, 'teacher': None}
-            for s in subjects:
-                for t in teachers:
-                    if s in data['teacher_info'][t]['can_teach']:
-                        var = x[c][p][s].get(t)
-                        if var is not None and solver.Value(var) == 1:
-                            entry['subject'] = s
-                            entry['teacher'] = t
-            out[c].append(entry)
-    return out
-
-
-def export_solution_json(data, x, solver, output_path: str = None):
-    if output_path is None:
-        output_path = os.getenv('SOLUTION_JSON', 'solution.json')
-    solution = build_solution(data, x, solver)
-    with open(output_path, 'w') as f:
-        json.dump(solution, f, indent=2)
-    print(f"Saved solution to {output_path}")
-    return solution
 
 
 def build_solution(data, x, solver) -> dict:

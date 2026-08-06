@@ -294,10 +294,14 @@ def pre_validate_input(data: Dict) -> PreValidationResult:
                 f"[ERROR] Subject '{s}' has NO qualified teachers - cannot be scheduled"
             )
             result.is_valid = False
-        if subject_info[s].get('is_double_period', False) and subject_info[s]['hours_per_week'] % 2 != 0:
+        # without this the solver burns the whole time limit and returns a bare
+        # INFEASIBLE, with nothing pointing at the subject that caused it
+        block = block_size(subject_info[s])
+        hours = subject_info[s]['hours_per_week']
+        if block > 1 and hours % block != 0:
             result.errors.append(
-                f"[ERROR] Double-period subject '{s}' has odd hours_per_week "
-                f"({subject_info[s]['hours_per_week']}) - must be even to form pairs"
+                f"[ERROR] Subject '{s}': hours_per_week ({hours}) must be a multiple of "
+                f"block_size ({block}) - the hours cannot be split into whole blocks"
             )
             result.is_valid = False
 

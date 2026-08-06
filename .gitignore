@@ -28,9 +28,16 @@ Thumbs.db
 
 # Generated solver outputs
 solution.json
-timetable.png
-teacher_timetables.png
-room_timetables.png
+*.png
+
+# Database (WAL and SHM files travel alongside the .db)
+backend/*.db
+backend/*.db-*
+
+# Frontend
+node_modules/
+frontend/dist/
+*.tsbuildinfo
 
 # Local logs
 *.log
